@@ -120,7 +120,7 @@ export default function FinancialHistory() {
 
   return (
     <div className="w-full shadow-md">
-      <Card className=" text-white">
+      <Card className=" text-white bg-transparent">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">History</CardTitle>
           <div className="flex gap-2 flex-wrap">
@@ -189,7 +189,7 @@ export default function FinancialHistory() {
             </div>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="">
           <div className="h-[400px] w-full">
             <BarChart
               width={800}

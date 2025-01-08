@@ -10,6 +10,7 @@ import {
   DollarSign,
   Home,
   Inbox,
+  LogOutIcon,
   MessageCircleQuestion,
   Search,
   Settings2,
@@ -29,6 +30,9 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import NavBypass from "./nav-bypass"
+import { useState } from "react"
+import { AddTransactionModal } from "./modal/transaction-modal"
+import { AddTransactionForm } from "./form/create-income-form"
 
 // This is sample data.
 const data = {
@@ -80,30 +84,30 @@ const data = {
     },
   ],
   navSecondary: [
-    {
-      title: "Calendar",
-      url: "#",
-      icon: Calendar,
-    },
+    // {
+    //   title: "Calendar",
+    //   url: "#",
+    //   icon: Calendar,
+    // },
+    // {
+    //   title: "Templates",
+    //   url: "#",
+    //   icon: Blocks,
+    // },
+    // {
+    //   title: "Trash",
+    //   url: "#",
+    //   icon: Trash2,
+    // },
     {
       title: "Settings",
       url: "#",
       icon: Settings2,
     },
     {
-      title: "Templates",
+      title: "Logout",
       url: "#",
-      icon: Blocks,
-    },
-    {
-      title: "Trash",
-      url: "#",
-      icon: Trash2,
-    },
-    {
-      title: "Help",
-      url: "#",
-      icon: MessageCircleQuestion,
+      icon: LogOutIcon,
     },
   ],
   favorites: [
@@ -270,6 +274,15 @@ const data = {
 export function SidebarLeft({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+
+  const handleAddIncome = (data: any) => {
+    console.log('Income added:', data)
+    // Here you would typically save the data to your backend or state management system
+  }
+
   return (
     <Sidebar className="border-r-0" {...props} collapsible="icon" >
       <SidebarHeader>
@@ -277,12 +290,23 @@ export function SidebarLeft({
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>
-        <NavBypass />
+        <NavBypass setIsModalOpen={setIsModalOpen} />
         {/* <NavFavorites favorites={data.favorites} /> */}
         {/* <NavWorkspaces workspaces={data.workspaces} /> */}
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarRail />
+      {/* <AddTransactionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleAddIncome}
+      /> */}
+       <AddTransactionForm
+        open={isModalOpen}
+        onOpenChange={() => setIsModalOpen(false)}
+        // onSubmit={handleAddIncome}
+        transactionType='income'
+      />
     </Sidebar>
   )
 }

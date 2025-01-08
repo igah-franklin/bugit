@@ -7,6 +7,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { TooltipProvider } from "./tooltip-provider"
 
 export function NavMain({
   items,
@@ -24,7 +25,11 @@ export function NavMain({
         <SidebarMenuItem key={item.title}>
           <SidebarMenuButton asChild isActive={item.isActive}>
             <a href={item.url}>
-              <item.icon />
+              <TooltipProvider
+              text={item.title}
+              >
+                <item.icon />
+              </TooltipProvider>
               <span>{item.title}</span>
             </a>
           </SidebarMenuButton>

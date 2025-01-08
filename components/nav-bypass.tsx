@@ -2,7 +2,11 @@ import React from 'react'
 import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from './ui/sidebar'
 import { EyeIcon, MoreHorizontal, PlusIcon } from 'lucide-react'
 
-export default function NavBypass() {
+interface INavBypassProps {
+    setIsModalOpen: Function
+}
+export default function NavBypass({ setIsModalOpen }: INavBypassProps ) {
+    
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Favorites Actions</SidebarGroupLabel>
@@ -16,7 +20,9 @@ export default function NavBypass() {
                 </div>
                 <span className='text-xsm'>View all</span>
             </div>
-            <div className='cursor-pointer'>
+            <div className='cursor-pointer'
+            onClick={() => setIsModalOpen(true)}
+            >
                 <div className='h-16 w-16 flex justify-center items-center border-2 border-dotted dark:border-white/30 p-1 rounded-lg'>
                     <div className='h-12 w-12   bg-emerald-500/20 flex justify-center items-center rounded-lg shadow-md'>
                         <PlusIcon className='text-emerald-700 shadow-md' />

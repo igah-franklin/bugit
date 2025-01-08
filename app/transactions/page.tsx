@@ -9,7 +9,7 @@ export default function TransactionsPage() {
       
         <TransactionTable columns={columns} data={transactions} />
       </div>
-      <div className="mx-auto h-[100vh] w-full max-w-3xl rounded-xl bg-muted/50" />
+     
     </div>
   )
 }

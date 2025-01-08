@@ -1,3 +1,5 @@
+import { IGridTransaction } from "@/types/ITransaction";
+
 export type ITransaction = {
     id: string;
     category: string;
@@ -50,4 +52,64 @@ export type ITransaction = {
     },
   ];
   
+
+// Sample data - in a real app this would come from an API/database
+export const gridTransactions: IGridTransaction[] = [
+  {
+    id: '1',
+    amount: 2500,
+    type: 'income',
+    date: '2024-03-15',
+    category: 'Salary',
+    description: 'Monthly salary'
+  },
+  {
+    id: '2',
+    amount: 50,
+    type: 'expense',
+    date: '2024-03-15',
+    category: 'Food',
+    description: 'Grocery shopping'
+  },
+  {
+    id: '3',
+    amount: 1000,
+    type: 'income',
+    date: '2024-03-10',
+    category: 'Freelance',
+    description: 'Web development project'
+  },
+  {
+    id: '4',
+    amount: 800,
+    type: 'expense',
+    date: '2024-03-05',
+    category: 'Rent',
+    description: 'Monthly rent'
+  },
+  {
+    id: '5',
+    amount: 1000,
+    type: 'income',
+    date: '2025-01-05',
+    category: 'Rent',
+    description: 'Monthly rent'
+  },
+  {
+    id: '6',
+    amount: 600,
+    type: 'expense',
+    date: '2025-01-07',
+    category: 'Food',
+    description: 'Monthly rent'
+  },
+  {
+    id: '7',
+    amount: 900,
+    type: 'income',
+    date: '2025-01-07',
+    category: 'Gifting',
+    description: 'Monthly rent'
+  }
+];
   

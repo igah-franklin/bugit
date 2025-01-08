@@ -2,6 +2,7 @@
 'use client'
 import { TransactionCard } from "@/components/card/transaction-card"
 import FinancialHistory from "@/components/financial-history/financial-history"
+import { TransactionHistoryGrid } from "@/components/transaction-history-grid/transaction-history-grid"
 import { useState } from "react"
 
 
@@ -23,15 +24,18 @@ export default function Page() {
         {/* <div className="w-full max-w-5xl mx-auto rounded-xl bg-mute grid grid-cols-1 md:grid-cols-3 gap-4 p-2" >
         </div> */}
         <div className="w-full max-w-5xl mx-auto bg-muted/50 p-2 rounded-md">
+          <TransactionHistoryGrid />
+        </div>
+        <div className="w-full max-w-5xl mx-auto bg-muted/50 p-2 rounded-md">
           <FinancialHistory />
         </div>
-        <div className="w-full max-w-5xl mx-auto flex justify-between">
+        {/* <div className="w-full max-w-5xl mx-auto flex justify-between">
           <h3>Recent transactions</h3>
           <span>View all</span>
         </div>
         <div className="w-full max-w-5xl mx-auto rounded-xl bg-muted/50 grid grid-cols-1 md:grid-cols-3 gap-4 p-2" >
           
-        </div>
+        </div> */}
       </div>
     </>
   )
