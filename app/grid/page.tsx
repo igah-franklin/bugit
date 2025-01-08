@@ -11,16 +11,6 @@ export default function gridPage() {
   const [open, setOpen] = useState(false)
   return (
     <div>
-      {/* <AlertDialog>
-        <AlertDialogTrigger>Open</AlertDialogTrigger>
-        <AlertDialogContent>
-          <InputForm />
-          <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
-        </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog> */}
           <div className="p-4">
       <Button onClick={() => setOpen(true)}>Add Income</Button>
       <AddIncomeForm open={open} onOpenChange={setOpen} />

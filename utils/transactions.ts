@@ -174,19 +174,5 @@ export const income: IIncome[] = [
     amount: 200,
     date: '2023-01-10',
   },
-  {
-    id: '4',
-    category: 'Freelance',
-    description: 'Web development project',
-    amount: 1000,
-    date: '2023-01-15',
-  },
-  {
-    id: '5',
-    category: 'Utilities',
-    description: 'Electricity bill',
-    amount: 100,
-    date: '2023-01-20',
-  },
 ];
   

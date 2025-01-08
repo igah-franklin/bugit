@@ -190,10 +190,10 @@ export default function FinancialHistory() {
           </div>
         </CardHeader>
         <CardContent className="">
-          <div className="h-[400px] w-full">
+          <div className="h-[330px] w-full">
             <BarChart
-              width={800}
-              height={400}
+              width={900}
+              height={350}
               data={chartData}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
             >

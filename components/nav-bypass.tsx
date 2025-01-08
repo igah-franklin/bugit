@@ -11,7 +11,7 @@ export default function NavBypass({ handleOpenModal }: INavBypassProps ) {
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Favorites Actions</SidebarGroupLabel>
       <SidebarMenu>
-        <div className='grid grid-cols-2 gap-3'>
+        <div className='flex items-center gap-1'>
             {/* <div className='cursor-pointer'>
                 <div className='h-16 w-16 flex justify-center items-center border-2 border-dotted dark:border-white/30 p-1 rounded-lg'>
                     <div className='h-12 w-12 flex justify-center items-center bg-gray-800 rounded-lg'>

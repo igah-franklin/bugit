@@ -33,6 +33,7 @@ import NavBypass from "./nav-bypass"
 import { useState } from "react"
 import { AddTransactionModal } from "./modal/transaction-modal"
 import { AddTransactionForm } from "./form/create-transaction-form"
+import { useTransactionModal } from "@/hooks/use-transaction-modal"
 
 // This is sample data.
 const data = {
@@ -76,12 +77,12 @@ const data = {
       icon: Inbox,
       badge: "10",
     },
-    {
-      title: "Categories",
-      url: "/categories",
-      icon: Inbox,
-      badge: "10",
-    },
+    // {
+    //   title: "Categories",
+    //   url: "/categories",
+    //   icon: Inbox,
+    //   badge: "10",
+    // },
   ],
   navSecondary: [
     {
@@ -102,8 +103,9 @@ export function SidebarLeft({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedType, setSelectedType] = useState<string>('')
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [selectedType, setSelectedType] = useState<string>('')
+  const { isModalOpen, setIsModalOpen, handleOpenModal, selectedType } = useTransactionModal();
 
 
   const handleAddIncome = (data: any) => {
@@ -111,10 +113,10 @@ export function SidebarLeft({
     // Here you would typically save the data to your backend or state management system
   }
 
-  const handleOpenModal = (type: string)=>{
-    setSelectedType(type);
-    setIsModalOpen(true);
-  }
+  // const handleOpenModal = (type: string)=>{
+  //   setSelectedType(type);
+  //   setIsModalOpen(true);
+  // }
 
   return (
     <Sidebar className="border-r-0" {...props} collapsible="icon" >
@@ -132,7 +134,6 @@ export function SidebarLeft({
        <AddTransactionForm
         open={isModalOpen}
         onOpenChange={() => setIsModalOpen(false)}
-
         transactionType={selectedType}
       />
     </Sidebar>
