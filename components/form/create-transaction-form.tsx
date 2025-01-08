@@ -88,7 +88,9 @@ export function AddTransactionForm({ transactionType, open, onOpenChange }: AddI
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className={cn('text-2xl font-bold', transactionType==='income' ? 'text-red' : 'text-emerald-500' )}>Add {transactionType==='income' ? 'Income' : 'Expense'}</DialogTitle>
+          <DialogTitle className={cn('text-2xl font-bold', transactionType==='expense' ? 'text-red-500' : 'text-emerald-500' )}>
+            Add {transactionType==='income' ? 'Income' : 'Expense'}
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -240,7 +242,6 @@ export function AddTransactionForm({ transactionType, open, onOpenChange }: AddI
         transactionType={transactionType}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        
     />
     </>
   )
@@ -260,7 +261,7 @@ const CreateCategoryDialog = ({ isOpen, onClose, transactionType }: AddIncomeMod
         <AlertDialogContent>
           <AlertDialogHeader>
             <div className="flex justify-between items-center">
-                <AlertDialogTitle>Create a new category for <span className={cn('', transactionType==='income' ? 'text-red' : 'text-emerald-500' )}>
+                <AlertDialogTitle>Create a new category for <span className={cn('', transactionType==='expense' ? 'text-red-500' : 'text-emerald-500' )}>
                     {transactionType==='income' ? 'Income' : 'Expense'}</span>?
                     </AlertDialogTitle>
                 <AlertDialogCancel>X</AlertDialogCancel>

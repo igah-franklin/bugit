@@ -1,4 +1,4 @@
-import { IGridTransaction } from "@/types/ITransaction";
+import { IExpense, IGridTransaction, IIncome } from "@/types/ITransaction";
 
 export type ITransaction = {
     id: string;
@@ -111,5 +111,82 @@ export const gridTransactions: IGridTransaction[] = [
     category: 'Gifting',
     description: 'Monthly rent'
   }
+];
+
+
+export const expenses: IExpense[] = [
+  {
+    id: '1',
+    category: 'Salary',
+    description: 'Monthly salary',
+    amount: 5000,
+    date: '2023-01-01',
+  },
+  {
+    id: '2',
+    category: 'Rent',
+    description: 'Monthly rent',
+    amount: 1500,
+    date: '2023-01-05',
+  },
+  {
+    id: '3',
+    category: 'Groceries',
+    description: 'Weekly groceries',
+    amount: 200,
+    date: '2023-01-10',
+  },
+  {
+    id: '4',
+    category: 'Freelance',
+    description: 'Web development project',
+    amount: 1000,
+    date: '2023-01-15',
+  },
+  {
+    id: '5',
+    category: 'Utilities',
+    description: 'Electricity bill',
+    amount: 100,
+    date: '2023-01-20',
+  },
+];
+  
+export const income: IIncome[] = [
+  {
+    id: '1',
+    category: 'Salary',
+    description: 'Monthly salary',
+    amount: 5000,
+    date: '2023-01-01',
+  },
+  {
+    id: '2',
+    category: 'Rent',
+    description: 'Monthly rent',
+    amount: 1500,
+    date: '2023-01-05',
+  },
+  {
+    id: '3',
+    category: 'Groceries',
+    description: 'Weekly groceries',
+    amount: 200,
+    date: '2023-01-10',
+  },
+  {
+    id: '4',
+    category: 'Freelance',
+    description: 'Web development project',
+    amount: 1000,
+    date: '2023-01-15',
+  },
+  {
+    id: '5',
+    category: 'Utilities',
+    description: 'Electricity bill',
+    amount: 100,
+    date: '2023-01-20',
+  },
 ];
   

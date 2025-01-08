@@ -13,3 +13,20 @@ export interface IGridTransaction {
     totalIncome: number;
     totalExpense: number;
   }
+
+
+  export interface IExpense {
+    id: string;
+    amount: number;
+    date: string;
+    category: string;
+    description: string;
+  }
+
+  export interface IIncome {
+    id: string;
+    amount: number;
+    date: string;
+    category: string;
+    description: string;
+  }

@@ -3,25 +3,25 @@ import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, Sideba
 import { EyeIcon, MoreHorizontal, PlusIcon } from 'lucide-react'
 
 interface INavBypassProps {
-    setIsModalOpen: Function
+    handleOpenModal: (item: string) => void
 }
-export default function NavBypass({ setIsModalOpen }: INavBypassProps ) {
+export default function NavBypass({ handleOpenModal }: INavBypassProps ) {
     
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Favorites Actions</SidebarGroupLabel>
       <SidebarMenu>
         <div className='grid grid-cols-2 gap-3'>
-            <div className='cursor-pointer'>
+            {/* <div className='cursor-pointer'>
                 <div className='h-16 w-16 flex justify-center items-center border-2 border-dotted dark:border-white/30 p-1 rounded-lg'>
                     <div className='h-12 w-12 flex justify-center items-center bg-gray-800 rounded-lg'>
                         <EyeIcon />
                     </div>
                 </div>
                 <span className='text-xsm'>View all</span>
-            </div>
+            </div> */}
             <div className='cursor-pointer'
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => handleOpenModal('income')}
             >
                 <div className='h-16 w-16 flex justify-center items-center border-2 border-dotted dark:border-white/30 p-1 rounded-lg'>
                     <div className='h-12 w-12   bg-emerald-500/20 flex justify-center items-center rounded-lg shadow-md'>
@@ -30,7 +30,9 @@ export default function NavBypass({ setIsModalOpen }: INavBypassProps ) {
                 </div>
                 <span className='text-xsm'>Income</span>
             </div>
-            <div className='cursor-pointer'>
+            <div className='cursor-pointer'
+            onClick={() => handleOpenModal('expense')}
+            >
                 <div className='h-16 w-16 flex justify-center items-center border-2 border-dotted dark:border-white/30 p-1 rounded-lg'>
                     <div className='h-12 w-12 flex justify-center items-center bg-red-500/20 text-red-700 rounded-lg shadow-md p-1'>
                         <PlusIcon />
@@ -38,14 +40,14 @@ export default function NavBypass({ setIsModalOpen }: INavBypassProps ) {
                 </div>
                 <span className='text-xsm'>Expenses</span>
             </div>
-            <div className='cursor-pointer'>
+            {/* <div className='cursor-pointer'>
                 <div className='h-16 w-16 flex justify-center items-center border-2 border-dotted dark:border-white/30 p-1 rounded-lg'>
                     <div className='h-12 w-12 flex justify-center items-center bg-black/50 rounded-lg'>
                         <PlusIcon />
                     </div>
                 </div>
                 <span className='text-xsm'>category</span>
-            </div>
+            </div> */}
         </div>
       </SidebarMenu>
     </SidebarGroup>
