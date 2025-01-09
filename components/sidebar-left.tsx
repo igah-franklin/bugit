@@ -16,6 +16,7 @@ import {
   Settings2,
   Sparkles,
   Trash2,
+  Wallet,
 } from "lucide-react"
 
 import { NavFavorites } from "./nav-favorites"
@@ -40,19 +41,19 @@ const data = {
   teams: [
     {
       name: "Bujet",
-      logo: Command,
+      logo:  Wallet,
       plan: "Enterprise",
     },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
+    // {
+    //   name: "Acme Corp.",
+    //   logo: AudioWaveform,
+    //   plan: "Startup",
+    // },
+    // {
+    //   name: "Evil Corp.",
+    //   logo: Command,
+    //   plan: "Free",
+    // },
   ],
   navMain: [
     {
@@ -77,12 +78,12 @@ const data = {
       icon: Inbox,
       badge: "10",
     },
-    // {
-    //   title: "Categories",
-    //   url: "/categories",
-    //   icon: Inbox,
-    //   badge: "10",
-    // },
+    {
+      title: "Categories",
+      url: "/categories",
+      icon: Inbox,
+      badge: "10",
+    },
   ],
   navSecondary: [
     {
