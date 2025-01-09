@@ -30,3 +30,8 @@ export interface IGridTransaction {
     category: string;
     description: string;
   }
+
+  export interface ICategories {
+    id: string;
+    categoryName: string;
+  }

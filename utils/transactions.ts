@@ -1,4 +1,4 @@
-import { IExpense, IGridTransaction, IIncome } from "@/types/ITransaction";
+import { ICategories, IExpense, IGridTransaction, IIncome } from "@/types/ITransaction";
 
 export type ITransaction = {
     id: string;
@@ -176,3 +176,33 @@ export const income: IIncome[] = [
   },
 ];
   
+export const categories: ICategories[] = [
+  {
+    id: '1',
+    categoryName: "INV001",
+  },
+  {
+    id: '2',
+    categoryName: "INV002",
+  },
+  {
+    id: '3',
+    categoryName: "INV003",
+  },
+  {
+    id: '4',
+    categoryName: "INV004",
+  },
+  {
+    id: '5',
+    categoryName: "INV005",
+  },
+  {
+    id: '6',
+    categoryName: "INV006",
+  },
+  {
+    id: '7',
+    categoryName: "INV007",
+  },
+]

@@ -13,7 +13,7 @@ import {
 import { CircleAlert } from "lucide-react"
 import { ReactNode } from "react"
 
-  interface IActionModal {
+  interface IDeleteModal {
     dataId: string,
     title: string, 
     type: 'delete' | 'other', 
@@ -23,7 +23,7 @@ import { ReactNode } from "react"
   }
 
   
-  export default function ActionModal({ title, type, description, actionBtnText, dataId, children }: IActionModal) {
+  export default function DeleteModal({ title, type, description, actionBtnText, dataId, children }: IDeleteModal) {
 
       const handleDeleteItem = ()=>{
         console.log(dataId, 'transaction id')
