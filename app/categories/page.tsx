@@ -2,11 +2,10 @@
 import CreateCategoryForm from "@/components/form/create-category-form";
 import { CategoriesTable } from "@/components/table/categories/categories-table";
 import { Button } from "@/components/ui/button";
-import { useTransactionModal } from "@/hooks/use-transaction-modal";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 
-export default function ExpensesPage() {
+export default function CategoriesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (

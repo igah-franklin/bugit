@@ -7,15 +7,19 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form';
 import { Input } from '../ui/input';
 import { Dialog, DialogTitle } from '@radix-ui/react-dialog';
 import { DialogContent, DialogHeader } from '../ui/dialog';
+import { ICategories } from '@/types/ITransaction';
 
+interface ICategoryProps {
+    category: ICategories
+}
 
-
-interface AddCategoryFormProps {
+interface EditCategoryFormProps {
+    category: any;
     open: boolean;
     onOpenChange: (open: boolean) => void;
   }
 
-export default function CreateCategoryForm({ open, onOpenChange}:AddCategoryFormProps ) {
+export default function EditCategoryForm({ category, open, onOpenChange}:EditCategoryFormProps ) {
 
     const form = useForm({
         defaultValues: {
@@ -58,8 +62,8 @@ export default function CreateCategoryForm({ open, onOpenChange}:AddCategoryForm
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="w-1/2 font-semibold">
-                        Create Category
+                    <Button type="submit" className="w-1/2">
+                        Edit Category
                     </Button>
                 </form>
             </Form>

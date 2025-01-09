@@ -13,7 +13,7 @@ import {
 import { ITransaction } from "@/utils/transactions"
 import { DataTableColumnHeader } from "./column-header"
 import { cn } from "@/lib/utils"
-import ActionModal from "../modal/action-modal"
+import ActionModal from "../modal/delete-modal"
 
 
 export const columns: ColumnDef<ITransaction>[] = [
