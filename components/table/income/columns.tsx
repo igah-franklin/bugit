@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 import { DataTableColumnHeader } from "../column-header"
-import ActionModal from "@/components/modal/action-modal"
 import { IExpense } from "@/types/ITransaction"
+import DeleteModal from "@/components/modal/delete-modal"
 
 
 export const columns: ColumnDef<IExpense>[] = [
@@ -94,7 +94,7 @@ export const columns: ColumnDef<IExpense>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <ActionModal
+            <DeleteModal
                     title='Are you sure you want to delete this transaction' 
                     type='delete'
                     description='This action cannot be undone. This will permanently delete the transaction.'
@@ -104,7 +104,7 @@ export const columns: ColumnDef<IExpense>[] = [
                     <Button 
                     variant='ghost'
                     className={cn('w-full text-red-400 justify-start p-2 hover:text-red-400 hover:bg-transparent')}><Trash2/> Delete</Button>
-                </ActionModal>
+                </DeleteModal>
           </DropdownMenuContent>
         </DropdownMenu>
       )
