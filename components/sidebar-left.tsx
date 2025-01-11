@@ -2,27 +2,16 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
-  Banknote,
-  Blocks,
-  Calendar,
-  Command,
-  DollarSign,
   Home,
   Inbox,
   LogOutIcon,
-  MessageCircleQuestion,
-  Search,
   Settings2,
   Sparkles,
-  Trash2,
   Wallet,
 } from "lucide-react"
 
-import { NavFavorites } from "./nav-favorites"
 import { NavMain } from "./nav-main"
 import { NavSecondary } from "./nav-secondary"
-import { NavWorkspaces } from "./nav-workspaces"
 import { TeamSwitcher } from "./team-switcher"
 import {
   Sidebar,
@@ -32,9 +21,8 @@ import {
 } from "@/components/ui/sidebar"
 import NavBypass from "./nav-bypass"
 import { useState } from "react"
-import { AddTransactionModal } from "./modal/transaction-modal"
-import { AddTransactionForm } from "./form/create-transaction-form"
 import { useTransactionModal } from "@/hooks/use-transaction-modal"
+import { CreateTransactionForm } from "./form/create-transaction-form"
 
 // This is sample data.
 const data = {
@@ -44,16 +32,6 @@ const data = {
       logo:  Wallet,
       plan: "Enterprise",
     },
-    // {
-    //   name: "Acme Corp.",
-    //   logo: AudioWaveform,
-    //   plan: "Startup",
-    // },
-    // {
-    //   name: "Evil Corp.",
-    //   logo: Command,
-    //   plan: "Free",
-    // },
   ],
   navMain: [
     {
@@ -132,7 +110,7 @@ export function SidebarLeft({
       </SidebarContent>
       <SidebarRail />
  
-       <AddTransactionForm
+       <CreateTransactionForm
         open={isModalOpen}
         onOpenChange={() => setIsModalOpen(false)}
         transactionType={selectedType}

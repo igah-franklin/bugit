@@ -21,7 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import React, { useMemo } from "react"
-import { ITransaction } from "@/utils/transactions"
+
 
 import { IExpense } from "@/types/ITransaction"
 import { DataTableFacetedFilter } from "../data-table-faceted-filter"
@@ -72,14 +72,6 @@ export function ExpenseTable<TData extends IExpense, TValue>({
   return (
     <div>
         <div className="mb-10">
-        {/* <Input
-          placeholder="Filter category..."
-          value={(table.getColumn("category")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("category")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        /> */}
         {
             table.getColumn('category') && (
                 <DataTableFacetedFilter

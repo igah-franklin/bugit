@@ -5,8 +5,7 @@ import { useForm } from 'react-hook-form'
 import { Button } from '../ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form';
 import { Input } from '../ui/input';
-import { Dialog, DialogTitle } from '@radix-ui/react-dialog';
-import { DialogContent, DialogHeader } from '../ui/dialog';
+import CustomModal from '../modal/custom-modal';
 
 
 
@@ -30,11 +29,11 @@ export default function CreateCategoryForm({ open, onOpenChange}:AddCategoryForm
       }
   return (
     <>
-    <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent>
-            <DialogHeader>
-                <DialogTitle>Add Category</DialogTitle>
-            </DialogHeader>
+        <CustomModal
+            title='Create category'
+            open={open} 
+            onOpenChange={onOpenChange}
+        >
             <Form {...form}>
                 
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -63,8 +62,7 @@ export default function CreateCategoryForm({ open, onOpenChange}:AddCategoryForm
                     </Button>
                 </form>
             </Form>
-        </DialogContent>
-    </Dialog>
+        </CustomModal>
     </>
   )
 }

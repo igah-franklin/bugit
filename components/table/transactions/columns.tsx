@@ -11,9 +11,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ITransaction } from "@/utils/transactions"
-import { DataTableColumnHeader } from "./column-header"
+import { DataTableColumnHeader } from "../column-header"
 import { cn } from "@/lib/utils"
-import ActionModal from "../modal/delete-modal"
+import ActionModal from "../../modal/delete-modal"
+import { useState } from "react"
+import { EditTransactionForm } from "@/components/form/edit-transaction-form"
 
 
 export const columns: ColumnDef<ITransaction>[] = [
@@ -100,31 +102,42 @@ export const columns: ColumnDef<ITransaction>[] = [
     id: "actions",
     cell: ({ row }) => {
       const transaction = row.original
+      const [isEditFormOpen, setEditFormOpen] = useState(false);
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            {/* <DropdownMenuItem onClick={() => console.log('Edit', transaction)}>Edit</DropdownMenuItem> */}
-            {/* <DropdownMenuItem onClick={() => console.log('Delete', transaction)}>Delete</DropdownMenuItem> */}
-            <ActionModal
-                    title='Are you sure you want to delete this transaction' 
-                    type='delete'
-                    description='This action cannot be undone. This will permanently delete the transaction.'
-                    actionBtnText='Delete'
-                    dataId={transaction.id}
-                >
-                    <Button 
-                    variant='ghost'
-                    className={cn('w-full text-red-400 justify-start p-2 hover:text-red-400 hover:bg-transparent')}><Trash2/> Delete</Button>
-                </ActionModal>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              {/* <DropdownMenuItem onClick={() => console.log('Edit', transaction)}>Edit</DropdownMenuItem> */}
+              <DropdownMenuItem onClick={() => setEditFormOpen(true)}>Edit</DropdownMenuItem>
+              <>
+              </>
+              <ActionModal
+                      title='Are you sure you want to delete this transaction' 
+                      type='delete'
+                      description='This action cannot be undone. This will permanently delete the transaction.'
+                      actionBtnText='Delete'
+                      dataId={transaction.id}
+                  >
+                      <Button 
+                      variant='ghost'
+                      className={cn('w-full text-red-400 justify-start p-2 hover:text-red-400 hover:bg-transparent')}><Trash2/> Delete</Button>
+                  </ActionModal>
+              </DropdownMenuContent>
+          </DropdownMenu>
+          <EditTransactionForm
+            transactionType={transaction.type}
+            transactionData={transaction}
+            open={isEditFormOpen}
+            onOpenChange={setEditFormOpen}
+          />
+        </>
       )
     },
   },

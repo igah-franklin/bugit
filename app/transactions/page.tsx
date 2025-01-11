@@ -1,11 +1,11 @@
 'use client'
-import { TransactionTable } from "@/components/table/transactions-table";
-import { columns } from "@/components/table/columns";
+import { TransactionTable } from "@/components/table/transactions/transactions-table";
+import { columns } from "@/components/table/transactions/columns";
 import { transactions } from "@/utils/transactions";
-import { AddTransactionForm } from "@/components/form/create-transaction-form";
 import { useTransactionModal } from "@/hooks/use-transaction-modal";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
+import { CreateTransactionForm } from "@/components/form/create-transaction-form";
 
 export default function TransactionsPage() {
   const { isModalOpen, setIsModalOpen, handleOpenModal, selectedType } = useTransactionModal();
@@ -32,7 +32,7 @@ export default function TransactionsPage() {
         <TransactionTable columns={columns} data={transactions} />
       </div>
     </div>
-    <AddTransactionForm
+    <CreateTransactionForm
       open={isModalOpen}
       onOpenChange={() => setIsModalOpen(false)}
       transactionType={selectedType}

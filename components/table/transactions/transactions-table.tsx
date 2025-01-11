@@ -21,11 +21,11 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import React, { useMemo } from "react"
-import { Input } from "../ui/input"
-import { DataTableFacetedFilter } from "./data-table-faceted-filter"
+import { Input } from "../../ui/input"
+import { DataTableFacetedFilter } from "../data-table-faceted-filter"
 import { ITransaction } from "@/utils/transactions"
-import { DataTableViewOptions } from "./column-toggle"
-import { Button } from "../ui/button"
+import { DataTableViewOptions } from "../column-toggle"
+import { Button } from "../../ui/button"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]

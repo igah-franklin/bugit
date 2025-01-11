@@ -94,7 +94,7 @@ export const columns: ColumnDef<IExpense>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DeleteModal
+              <DeleteModal
                     title='Are you sure you want to delete this transaction' 
                     type='delete'
                     description='This action cannot be undone. This will permanently delete the transaction.'

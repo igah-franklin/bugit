@@ -29,7 +29,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { useForm } from "react-hook-form"
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
+import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import InputForm from "@/components/form/input-form"
 import TransactionModal from "../modal/transaction-modal"
 
@@ -41,13 +41,14 @@ const initialCategories = [
   { value: "investments", label: "Investments" },
 ]
 
-interface AddIncomeFormProps {
+interface EditTransactionFormProps {
+  transactionData: any;
   transactionType: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function CreateTransactionForm({ transactionType, open, onOpenChange }: AddIncomeFormProps) {
+export function EditTransactionForm({ transactionType, transactionData, open, onOpenChange }: EditTransactionFormProps) {
   const [categories, setCategories] = React.useState(initialCategories)
   const [categoryOpen, setCategoryOpen] = React.useState(false)
   const [newCategory, setNewCategory] = React.useState("")
@@ -55,20 +56,20 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
 
   const form = useForm({
     defaultValues: {
-      amount: "",
-      description: "",
-      date: new Date(),
-      category: "",
+      amount: transactionData.amount,
+      description: transactionData.description,
+      date: transactionData.date,
+      category: transactionData.category,
     },
   })
 
   const onSubmit = async (data: any) => {
-    console.log(data)
+    console.log(data, 'data===>')
     // Handle form submission
     onOpenChange(false)
   }
 
-  const handleCreateCategory = () => {
+  const handleEditCategory = () => {
     if (newCategory.trim()) {
       const value = newCategory.toLowerCase().replace(/\s+/g, '-')
       setCategories([...categories, { value, label: newCategory }])
@@ -81,10 +82,10 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
   return (
     <>
         <TransactionModal
-        title={`Create ${transactionType}`}
-        open={open} 
-        onOpenChange={onOpenChange}
-        transactionType={transactionType}
+            title={`Update ${transactionType}`}
+            open={open} 
+            onOpenChange={onOpenChange}
+            transactionType={transactionType}
         >
             <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -156,7 +157,6 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
                     </FormItem>
                 )}
                 />
-
                 <FormField
                 control={form.control}
                 name="category"
@@ -231,11 +231,11 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
             </form>
             </Form>
         </TransactionModal>
-       <CreateCategoryDialog
-        transactionType={transactionType}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-    />
+        <CreateCategoryDialog
+            transactionType={transactionType}
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+        />
     </>
   )
 }

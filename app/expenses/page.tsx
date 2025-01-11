@@ -1,5 +1,5 @@
 'use client'
-import { AddTransactionForm } from "@/components/form/create-transaction-form";
+import { CreateTransactionForm } from "@/components/form/create-transaction-form";
 import { columns } from "@/components/table/expense/columns";
 import { ExpenseTable } from "@/components/table/expense/expenses-table";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,7 @@ export default function ExpensesPage() {
             <ExpenseTable columns={columns} data={expenses} />
           </div>
         </div>
-        <AddTransactionForm
+        <CreateTransactionForm
           open={isModalOpen}
           onOpenChange={() => setIsModalOpen(false)}
           transactionType={selectedType}

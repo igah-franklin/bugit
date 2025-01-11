@@ -16,7 +16,7 @@ import {
 import { cn } from "@/lib/utils";
 import { categories } from "@/utils/transactions";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { MoreHorizontal, Trash2 } from "lucide-react";
+import { Edit2, MoreHorizontal, Trash2 } from "lucide-react";
 import { useState } from "react";
 
   
@@ -49,10 +49,10 @@ import { useState } from "react";
                             <>
                                 <Button 
                                     variant='ghost'
-                                    className={cn('w-full text-emerald-500 justify-start p-2 hover:text-emerald-400 hover:bg-transparent')}
+                                    className={cn('w-full text-emerald-500 justify-start p-2 hover:text-emerald-400')}
                                     onClick={() => setIsModalOpen(true)}
                                 >
-                                    <Trash2/> Edit
+                                    <Edit2/> Edit
                                 </Button>
                                 <EditCategoryForm
                                     category={category}
@@ -69,7 +69,7 @@ import { useState } from "react";
                                 >
                                     <Button 
                                     variant='ghost'
-                                    className={cn('w-full text-red-400 justify-start p-2 hover:text-red-400 hover:bg-transparent')}><Trash2/> Delete</Button>
+                                    className={cn('w-full text-red-400 justify-start p-2 hover:text-red-400')}><Trash2/> Delete</Button>
                             </DeleteModal>
                         </DropdownMenuContent>
                     </DropdownMenu>
