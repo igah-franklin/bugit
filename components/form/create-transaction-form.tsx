@@ -29,9 +29,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { useForm } from "react-hook-form"
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
-import InputForm from "@/components/form/input-form"
 import TransactionModal from "../modal/transaction-modal"
+import CreateCategoryForm from "./create-category-form"
+import { useState } from "react"
 
 
 // Simulated categories - replace with your actual data fetching
@@ -48,10 +48,10 @@ interface AddIncomeFormProps {
 }
 
 export function CreateTransactionForm({ transactionType, open, onOpenChange }: AddIncomeFormProps) {
-  const [categories, setCategories] = React.useState(initialCategories)
-  const [categoryOpen, setCategoryOpen] = React.useState(false)
-  const [newCategory, setNewCategory] = React.useState("")
-  const [isModalOpen, setIsModalOpen] = React.useState(false)
+  const [categories, setCategories] = useState(initialCategories)
+  const [categoryOpen, setCategoryOpen] = useState(false)
+  const [newCategory, setNewCategory] = useState("")
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const form = useForm({
     defaultValues: {
@@ -231,11 +231,10 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
             </form>
             </Form>
         </TransactionModal>
-       <CreateCategoryDialog
-        transactionType={transactionType}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-    />
+        <CreateCategoryForm
+            open={isModalOpen}
+            onOpenChange={() => setIsModalOpen(false)}
+        />
     </>
   )
 }
@@ -248,23 +247,4 @@ interface AddIncomeModalProps {
     onClose: () => void
 }
 
-const CreateCategoryDialog = ({ isOpen, onClose, transactionType }: AddIncomeModalProps )=>{
-    return (
-     <AlertDialog  open={isOpen} onOpenChange={onClose}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <div className="flex justify-between items-center">
-                <AlertDialogTitle>Create a new category for <span className={cn('', transactionType==='expense' ? 'text-red-500' : 'text-emerald-500' )}>
-                    {transactionType==='income' ? 'Income' : 'Expense'}</span>?
-                    </AlertDialogTitle>
-                <AlertDialogCancel>X</AlertDialogCancel>
-            </div>
-            <AlertDialogDescription>
-              <InputForm />
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-        </AlertDialogContent>
-      </AlertDialog>
-    )
-}
 

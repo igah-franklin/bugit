@@ -14,8 +14,6 @@ import { ITransaction } from "@/utils/transactions"
 import { DataTableColumnHeader } from "../column-header"
 import { cn } from "@/lib/utils"
 import ActionModal from "../../modal/delete-modal"
-import { useState } from "react"
-import { EditTransactionForm } from "@/components/form/edit-transaction-form"
 
 
 export const columns: ColumnDef<ITransaction>[] = [
@@ -102,7 +100,6 @@ export const columns: ColumnDef<ITransaction>[] = [
     id: "actions",
     cell: ({ row }) => {
       const transaction = row.original
-      const [isEditFormOpen, setEditFormOpen] = useState(false);
       return (
         <>
           <DropdownMenu>
@@ -114,10 +111,6 @@ export const columns: ColumnDef<ITransaction>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              {/* <DropdownMenuItem onClick={() => console.log('Edit', transaction)}>Edit</DropdownMenuItem> */}
-              <DropdownMenuItem onClick={() => setEditFormOpen(true)}>Edit</DropdownMenuItem>
-              <>
-              </>
               <ActionModal
                       title='Are you sure you want to delete this transaction' 
                       type='delete'
@@ -131,12 +124,6 @@ export const columns: ColumnDef<ITransaction>[] = [
                   </ActionModal>
               </DropdownMenuContent>
           </DropdownMenu>
-          <EditTransactionForm
-            transactionType={transaction.type}
-            transactionData={transaction}
-            open={isEditFormOpen}
-            onOpenChange={setEditFormOpen}
-          />
         </>
       )
     },

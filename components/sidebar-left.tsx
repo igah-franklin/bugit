@@ -12,7 +12,6 @@ import {
 
 import { NavMain } from "./nav-main"
 import { NavSecondary } from "./nav-secondary"
-import { TeamSwitcher } from "./team-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -23,6 +22,7 @@ import NavBypass from "./nav-bypass"
 import { useState } from "react"
 import { useTransactionModal } from "@/hooks/use-transaction-modal"
 import { CreateTransactionForm } from "./form/create-transaction-form"
+import Logo from "./logo/logo"
 
 // This is sample data.
 const data = {
@@ -82,25 +82,12 @@ export function SidebarLeft({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
 
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [selectedType, setSelectedType] = useState<string>('')
   const { isModalOpen, setIsModalOpen, handleOpenModal, selectedType } = useTransactionModal();
-
-
-  const handleAddIncome = (data: any) => {
-    console.log('Income added:', data)
-    // Here you would typically save the data to your backend or state management system
-  }
-
-  // const handleOpenModal = (type: string)=>{
-  //   setSelectedType(type);
-  //   setIsModalOpen(true);
-  // }
 
   return (
     <Sidebar className="border-r-0" {...props} collapsible="icon" >
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <Logo/>
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>

@@ -29,9 +29,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { useForm } from "react-hook-form"
-import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
-import InputForm from "@/components/form/input-form"
 import TransactionModal from "../modal/transaction-modal"
+import CreateCategoryForm from "./create-category-form"
 
 
 // Simulated categories - replace with your actual data fetching
@@ -231,40 +230,11 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
             </form>
             </Form>
         </TransactionModal>
-        <CreateCategoryDialog
-            transactionType={transactionType}
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
+        <CreateCategoryForm
+            open={isModalOpen}
+            onOpenChange={() => setIsModalOpen(false)}
         />
     </>
   )
-}
-
-
-
-interface AddIncomeModalProps {
-    transactionType: string;
-    isOpen: boolean
-    onClose: () => void
-}
-
-const CreateCategoryDialog = ({ isOpen, onClose, transactionType }: AddIncomeModalProps )=>{
-    return (
-     <AlertDialog  open={isOpen} onOpenChange={onClose}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <div className="flex justify-between items-center">
-                <AlertDialogTitle>Create a new category for <span className={cn('', transactionType==='expense' ? 'text-red-500' : 'text-emerald-500' )}>
-                    {transactionType==='income' ? 'Income' : 'Expense'}</span>?
-                    </AlertDialogTitle>
-                <AlertDialogCancel>X</AlertDialogCancel>
-            </div>
-            <AlertDialogDescription>
-              <InputForm />
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-        </AlertDialogContent>
-      </AlertDialog>
-    )
 }
 

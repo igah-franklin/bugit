@@ -1,8 +1,4 @@
 import * as React from "react"
-import { Plus } from "lucide-react"
-
-import { Calendars } from "./calendars"
-import { DatePicker } from "./date-picker"
 import { NavUser } from "./nav-user"
 import {
   Sidebar,
@@ -53,9 +49,6 @@ export function SidebarRight({
         <NavUser user={data.user} />
       </SidebarHeader>
       <SidebarContent>
-        {/* <SidebarSeparator className="mx-0" />
-        <DatePicker />
-        <Calendars calendars={data.calendars} /> */}
         <FinancialHealthCalculator/>
       </SidebarContent>
       {/* <SidebarFooter>
