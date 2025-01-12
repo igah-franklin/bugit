@@ -26,6 +26,8 @@ import { DataTableFacetedFilter } from "../data-table-faceted-filter"
 import { ITransaction } from "@/utils/transactions"
 import { DataTableViewOptions } from "../column-toggle"
 import { Button } from "../../ui/button"
+import CustomDropdown from "@/components/custom-dropdown/custom-dropdown"
+import DownloadPdf, { DownloadCsv } from "@/components/documents/transaction-pdf"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -70,43 +72,43 @@ export function TransactionTable<TData extends ITransaction, TValue>({
 
   return (
     <div>
-        <div className="mb-10">
-        {/* <Input
-          placeholder="Filter category..."
-          value={(table.getColumn("category")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("category")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        /> */}
-        {
-            table.getColumn('category') && (
-                <DataTableFacetedFilter
-                    title="Filter by Category"
-                    column={table.getColumn('category')}
-                    options={categoriesOptions}
-                />
-            )
-        }
-        {
-            table.getColumn('type') && (
-                <DataTableFacetedFilter
-                    title="Filter by Type"
-                    column={table.getColumn('type')}
-                    options={[
-                        {
-                            label: 'Income',
-                            value: 'income'
-                        },
-                        {
-                            label: 'Expense',
-                            value: 'expense'
-                        },
-                    ]}
-                />
-            )
-        }
-        <DataTableViewOptions table={table} />
+        <div className="mb-10 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            {
+                table.getColumn('category') && (
+                    <DataTableFacetedFilter
+                        title="Filter by Category"
+                        column={table.getColumn('category')}
+                        options={categoriesOptions}
+                    />
+                )
+            }
+            {
+                table.getColumn('type') && (
+                    <DataTableFacetedFilter
+                        title="Filter by Type"
+                        column={table.getColumn('type')}
+                        options={[
+                            {
+                                label: 'Income',
+                                value: 'income'
+                            },
+                            {
+                                label: 'Expense',
+                                value: 'expense'
+                            },
+                        ]}
+                    />
+                )
+            }
+          </div>
+        <div className="flex items-center gap-3">
+          <DataTableViewOptions table={table} />
+          <CustomDropdown title="Download Document" bgColor="bg-black">
+            <DownloadPdf/>
+            <DownloadCsv/>
+          </CustomDropdown>
+        </div>
         </div>
         <div className="rounded-md border">
             <Table>

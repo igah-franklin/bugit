@@ -38,29 +38,33 @@ const data = {
       title: "Dashboard",
       url: "/",
       icon: Home,
+      isActive: false,
     },
     {
       title: "Transactions",
       url: "/transactions",
       icon: Sparkles,
+      isActive: false,
     },
     {
       title: "Expenses",
       url: "/expenses",
       icon: Home,
-      isActive: true,
+      isActive: false,
     },
     {
       title: "Income",
       url: "/income",
       icon: Inbox,
       badge: "10",
+      isActive: false,
     },
     {
       title: "Categories",
       url: "/categories",
       icon: Inbox,
       badge: "10",
+      isActive: false,
     },
   ],
   navSecondary: [
@@ -92,7 +96,6 @@ export function SidebarLeft({
       </SidebarHeader>
       <SidebarContent>
         <NavBypass handleOpenModal={handleOpenModal} />
-  
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarRail />

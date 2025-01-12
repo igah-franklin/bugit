@@ -50,6 +50,14 @@ export type ITransaction = {
       amount: 100,
       date: new Date('2023-01-20'),
     },
+    {
+      id: '6',
+      category: 'Salary',
+      description: 'Electricity bill',
+      type: 'expense',
+      amount: 100,
+      date: new Date('2025-01-20'),
+    },
   ];
   
 
