@@ -225,7 +225,7 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
                 />
 
                 <Button type="submit" className="w-full">
-                Add { transactionType }
+                Update { transactionType }
                 </Button>
             </form>
             </Form>

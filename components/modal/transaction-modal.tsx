@@ -190,7 +190,7 @@ export default function TransactionModal({ title, transactionType, open, onOpenC
     <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent>
             <DialogHeader>
-                <DialogTitle className={cn('text-2xl font-bold', 
+                <DialogTitle className={cn('text-2xl font-bold text-start', 
         transactionType==='expense' ? 'text-red-500' : 'text-emerald-500' )}>{ title }</DialogTitle>
             </DialogHeader>
             { children }

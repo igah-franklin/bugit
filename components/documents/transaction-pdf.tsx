@@ -74,11 +74,11 @@ const TransactionPDF = () => (
       </View>
       <View style={styles.table}>
         <View style={[styles.tableRow, styles.tableHeader]}>
-          <Text style={[styles.tableCell, styles.category]}>Category</Text>
-          <Text style={[styles.tableCell, styles.description]}>Description</Text>
-          <Text style={[styles.tableCell, styles.type]}>Type</Text>
-          <Text style={[styles.tableCell, styles.amount]}>Amount</Text>
-          <Text style={[styles.tableCell, styles.date]}>Date</Text>
+          <Text style={[styles.tableCell, styles.category, { fontWeight: 'bold', fontSize: 15}]}>Category</Text>
+          <Text style={[styles.tableCell, styles.description, { fontWeight: 'bold', fontSize: 15}]}>Description</Text>
+          <Text style={[styles.tableCell, styles.type, { fontWeight: 'bold', fontSize: 15}]}>Type</Text>
+          <Text style={[styles.tableCell, styles.amount, { fontWeight: 'bold', fontSize: 15}]}>Amount</Text>
+          <Text style={[styles.tableCell, styles.date, { fontWeight: 'bold', fontSize: 15}]}>Date</Text>
         </View>
         {transactions.map((item, index) => (
           <View key={index} style={styles.tableRow}>
