@@ -56,7 +56,7 @@ const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
 
 export default function FinancialHistory() {
   const [viewMode, setViewMode] = useState<"year" | "month">("year")
-  const [selectedYear, setSelectedYear] = useState<number>(2025)
+  const [selectedYear, setSelectedYear] = useState<number>(2024)
   const [selectedMonth, setSelectedMonth] = useState<string | "all">("all")
 
   const chartData = useMemo(() => {
