@@ -26,9 +26,9 @@ export default function Page() {
         <div className="w-full max-w-5xl mx-auto bg-muted/50 p-2 my-5 rounded-md hidden lg:block">
           <TransactionHistoryGrid />
         </div>
-        <div className="md:w-full max-w-5xl mx-auto bg-muted/50 p-2 rounded-md">
-        </div>
+        <div className="md:w-full max-w-5xl mx-auto bg-muted/50 p-2 rounded-md mt-5 md:mt-0">
           <FinancialHistory />
+        </div>
       </div>
     </>
   )
