@@ -83,7 +83,7 @@ export function ExpenseTable<TData extends IExpense, TValue>({
         }
         <DataTableViewOptions table={table} />
         </div>
-        <div className="rounded-md border">
+        <div className="rounded-md border grid grid-cols-1">
             <Table>
                 <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (

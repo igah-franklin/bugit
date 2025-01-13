@@ -13,7 +13,7 @@ export default function Page() {
 
   return (
     <>
-      <div className="flex flex-col gap-4 p-4">
+      <div className="mx-2 md:mx-0">
         <div className="w-full max-w-5xl mx-auto rounded-xl bg-muted/50 grid grid-cols-1 md:grid-cols-3 gap-4 p-2" >
           <TransactionCard title="Expense Total" amount={expenses} type="expense" />
           <TransactionCard title="Income Total" amount={income} type="income" />
@@ -23,19 +23,12 @@ export default function Page() {
         </div> */}
         {/* <div className="w-full max-w-5xl mx-auto rounded-xl bg-mute grid grid-cols-1 md:grid-cols-3 gap-4 p-2" >
         </div> */}
-        <div className="w-full max-w-5xl mx-auto bg-muted/50 p-2 rounded-md">
+        <div className="w-full max-w-5xl mx-auto bg-muted/50 p-2 my-5 rounded-md hidden lg:block">
           <TransactionHistoryGrid />
         </div>
-        <div className="w-full max-w-5xl mx-auto bg-muted/50 p-2 rounded-md">
+        <div className="md:w-full max-w-5xl mx-auto bg-muted/50 p-2 rounded-md">
+        </div>
           <FinancialHistory />
-        </div>
-        {/* <div className="w-full max-w-5xl mx-auto flex justify-between">
-          <h3>Recent transactions</h3>
-          <span>View all</span>
-        </div>
-        <div className="w-full max-w-5xl mx-auto rounded-xl bg-muted/50 grid grid-cols-1 md:grid-cols-3 gap-4 p-2" >
-          
-        </div> */}
       </div>
     </>
   )

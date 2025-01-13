@@ -11,8 +11,8 @@ export default function TransactionsPage() {
   const { isModalOpen, setIsModalOpen, handleOpenModal, selectedType } = useTransactionModal();
   return (
     <>
-    <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="flex items-center justify-end gap-3 mx-auto w-full max-w-5xl" >
+    <div className="">
+          <div className="flex items-center justify-end gap-3 mx-auto w-full max-w-5xl mb-3" >
               <div className="border-2 border-dotted dark:border-white/30 p-1 rounded-md ">
                 <Button className="py-5 bg-emerald-500/20 dark:text-white hover:bg-transparent"
                 onClick={() => handleOpenModal('income')}
@@ -28,7 +28,7 @@ export default function TransactionsPage() {
                 </Button>
               </div>
           </div>
-      <div className="mx-auto w-full max-w-5xl rounded-xl bg-muted/50 p-5">
+      <div className="lg:mx-auto lg:w-full lg:max-w-5xl rounded-xl bg-muted/50 p-5 mx-2 ">
         <TransactionTable columns={columns} data={transactions} />
       </div>
     </div>
