@@ -8,6 +8,7 @@ import { Input } from '../ui/input';
 import { Dialog, DialogTitle } from '@radix-ui/react-dialog';
 import { DialogContent, DialogHeader } from '../ui/dialog';
 import { ICategories } from '@/types/ITransaction';
+import CustomModal from '../modal/custom-modal';
 
 interface ICategoryProps {
     category: ICategories
@@ -23,7 +24,7 @@ export default function EditCategoryForm({ category, open, onOpenChange}:EditCat
 
     const form = useForm({
         defaultValues: {
-          category: "",
+          category: category.categoryName,
         },
         mode: "onBlur",
       })
@@ -34,13 +35,12 @@ export default function EditCategoryForm({ category, open, onOpenChange}:EditCat
       }
   return (
     <>
-    <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent>
-            <DialogHeader>
-                <DialogTitle>Add Category</DialogTitle>
-            </DialogHeader>
-            <Form {...form}>
-                
+        <CustomModal
+            title='Edit category'
+            open={open} 
+            onOpenChange={onOpenChange}
+        >
+          <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <FormField
                         control={form.control}
@@ -67,8 +67,7 @@ export default function EditCategoryForm({ category, open, onOpenChange}:EditCat
                     </Button>
                 </form>
             </Form>
-        </DialogContent>
-    </Dialog>
+    </CustomModal>
     </>
   )
 }

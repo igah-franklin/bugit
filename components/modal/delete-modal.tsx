@@ -37,8 +37,8 @@ import { ReactNode } from "react"
         <AlertDialogContent>
           <AlertDialogHeader>
           <CircleAlert className="text-red-400" />
-            <AlertDialogTitle>{ title }</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-start">{ title }</AlertDialogTitle>
+            <AlertDialogDescription className="text-start">
              { description }
             </AlertDialogDescription>
           </AlertDialogHeader>

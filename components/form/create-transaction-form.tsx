@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from "react"
-import { CalendarIcon, Check, ChevronsUpDown, Plus, PlusIcon, X } from 'lucide-react'
+import { CalendarIcon, Check, ChevronsUpDown, PlusIcon } from 'lucide-react'
 import { format } from "date-fns"
 
 import { cn } from "@/lib/utils"
@@ -16,12 +16,6 @@ import {
   CommandList,
 } from "@/components/ui/command"
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import {
   Form,
   FormControl,
   FormField,
@@ -35,8 +29,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { useForm } from "react-hook-form"
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
-import InputForm from "@/components/form/input-form"
+import TransactionModal from "../modal/transaction-modal"
+import CreateCategoryForm from "./create-category-form"
+import { useState } from "react"
 
 
 // Simulated categories - replace with your actual data fetching
@@ -52,11 +47,11 @@ interface AddIncomeFormProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export function AddTransactionForm({ transactionType, open, onOpenChange }: AddIncomeFormProps) {
-  const [categories, setCategories] = React.useState(initialCategories)
-  const [categoryOpen, setCategoryOpen] = React.useState(false)
-  const [newCategory, setNewCategory] = React.useState("")
-  const [isModalOpen, setIsModalOpen] = React.useState(false)
+export function CreateTransactionForm({ transactionType, open, onOpenChange }: AddIncomeFormProps) {
+  const [categories, setCategories] = useState(initialCategories)
+  const [categoryOpen, setCategoryOpen] = useState(false)
+  const [newCategory, setNewCategory] = useState("")
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const form = useForm({
     defaultValues: {
@@ -85,164 +80,161 @@ export function AddTransactionForm({ transactionType, open, onOpenChange }: AddI
 
   return (
     <>
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle className={cn('text-2xl font-bold', transactionType==='expense' ? 'text-red-500' : 'text-emerald-500' )}>
-            Add {transactionType==='income' ? 'Income' : 'Expense'}
-          </DialogTitle>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="amount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Amount</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="0"
-                      type="number"
-                      step="0.01"
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter description" {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Date</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "w-full pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Category</FormLabel>
-                  <Popover open={categoryOpen} onOpenChange={setCategoryOpen}>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "w-full justify-between",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? categories.find(
-                                (category) => category.value === field.value
-                              )?.label
-                            : "Select category..."}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
-                        <div className="py-2">
-                            <Button variant={'ghost'}
-                            className={cn('w-full py-1 bg-gray-900')}
-                            onClick={() => setIsModalOpen(true)}
-                            >
-                                <PlusIcon/>
-                                create new category
-                            </Button>
-                        </div>
-                        <Command>
-                            <CommandInput placeholder="Search category..." />
-                            <CommandList>
-                                <CommandEmpty>No categories found.</CommandEmpty>
-                                <CommandGroup>
-                                {categories.map((category) => (
-                                    <CommandItem
-                                    key={category.value}
-                                    value={category.value}
-                                    onSelect={() => {
-                                        form.setValue("category", category.value)
-                                        setCategoryOpen(false)
-                                      }}
-                                    >
-                                    {category.label}
-                                    <Check
-                                        className={cn(
-                                        "ml-auto",
-                                        field.value === category.value ? "opacity-100" : "opacity-0"
-                                        )}
-                                    />
-                                    </CommandItem>
-                                ))}
-                                </CommandGroup>
-                            </CommandList>
-                            </Command>
-                    </PopoverContent>
-                  </Popover>
-                </FormItem>
-              )}
-            />
-
-            <Button type="submit" className="w-full">
-              Add Income
-            </Button>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
-    <CreateCategoryDialog
+        <TransactionModal
+        title={`Create ${transactionType}`}
+        open={open} 
+        onOpenChange={onOpenChange}
         transactionType={transactionType}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-    />
+        >
+            <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField
+                control={form.control}
+                name="amount"
+                render={({ field }) => (
+                    <FormItem>
+                    <FormLabel>Amount</FormLabel>
+                    <FormControl>
+                        <Input
+                        placeholder="0"
+                        type="number"
+                        step="0.01"
+                        {...field}
+                        />
+                    </FormControl>
+                    </FormItem>
+                )}
+                />
+
+                <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                    <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                        <Input placeholder="Enter description" {...field} />
+                    </FormControl>
+                    </FormItem>
+                )}
+                />
+
+                <FormField
+                control={form.control}
+                name="date"
+                render={({ field }) => (
+                    <FormItem>
+                    <FormLabel>Date</FormLabel>
+                    <Popover>
+                        <PopoverTrigger asChild>
+                        <FormControl>
+                            <Button
+                            variant="outline"
+                            className={cn(
+                                "w-full pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                            )}
+                            >
+                            {field.value ? (
+                                format(field.value, "PPP")
+                            ) : (
+                                <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                        </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            initialFocus
+                        />
+                        </PopoverContent>
+                    </Popover>
+                    </FormItem>
+                )}
+                />
+
+                <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                    <FormItem>
+                    <FormLabel>Category</FormLabel>
+                    <Popover open={categoryOpen} onOpenChange={setCategoryOpen}>
+                        <PopoverTrigger asChild>
+                        <FormControl>
+                            <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                                "w-full justify-between",
+                                !field.value && "text-muted-foreground"
+                            )}
+                            >
+                            {field.value
+                                ? categories.find(
+                                    (category) => category.value === field.value
+                                )?.label
+                                : "Select category..."}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                        </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+                            <div className="py-2">
+                                <Button variant={'ghost'}
+                                className={cn('w-full py-1 bg-gray-900')}
+                                onClick={() => setIsModalOpen(true)}
+                                >
+                                    <PlusIcon/>
+                                    create new category
+                                </Button>
+                            </div>
+                            <Command>
+                                <CommandInput placeholder="Search category..." />
+                                <CommandList>
+                                    <CommandEmpty>No categories found.</CommandEmpty>
+                                    <CommandGroup>
+                                    {categories.map((category) => (
+                                        <CommandItem
+                                        key={category.value}
+                                        value={category.value}
+                                        onSelect={() => {
+                                            form.setValue("category", category.value)
+                                            setCategoryOpen(false)
+                                        }}
+                                        >
+                                        {category.label}
+                                        <Check
+                                            className={cn(
+                                            "ml-auto",
+                                            field.value === category.value ? "opacity-100" : "opacity-0"
+                                            )}
+                                        />
+                                        </CommandItem>
+                                    ))}
+                                    </CommandGroup>
+                                </CommandList>
+                                </Command>
+                        </PopoverContent>
+                    </Popover>
+                    </FormItem>
+                )}
+                />
+
+                <Button type="submit" className="w-full">
+                Add { transactionType }
+                </Button>
+            </form>
+            </Form>
+        </TransactionModal>
+        <CreateCategoryForm
+            open={isModalOpen}
+            onOpenChange={() => setIsModalOpen(false)}
+        />
     </>
   )
 }
@@ -255,23 +247,4 @@ interface AddIncomeModalProps {
     onClose: () => void
 }
 
-const CreateCategoryDialog = ({ isOpen, onClose, transactionType }: AddIncomeModalProps )=>{
-    return (
-     <AlertDialog  open={isOpen} onOpenChange={onClose}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <div className="flex justify-between items-center">
-                <AlertDialogTitle>Create a new category for <span className={cn('', transactionType==='expense' ? 'text-red-500' : 'text-emerald-500' )}>
-                    {transactionType==='income' ? 'Income' : 'Expense'}</span>?
-                    </AlertDialogTitle>
-                <AlertDialogCancel>X</AlertDialogCancel>
-            </div>
-            <AlertDialogDescription>
-              <InputForm />
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-        </AlertDialogContent>
-      </AlertDialog>
-    )
-}
 

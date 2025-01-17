@@ -2,28 +2,16 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
-  Banknote,
-  Blocks,
-  Calendar,
-  Command,
-  DollarSign,
   Home,
   Inbox,
   LogOutIcon,
-  MessageCircleQuestion,
-  Search,
   Settings2,
   Sparkles,
-  Trash2,
   Wallet,
 } from "lucide-react"
 
-import { NavFavorites } from "./nav-favorites"
 import { NavMain } from "./nav-main"
 import { NavSecondary } from "./nav-secondary"
-import { NavWorkspaces } from "./nav-workspaces"
-import { TeamSwitcher } from "./team-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -32,9 +20,9 @@ import {
 } from "@/components/ui/sidebar"
 import NavBypass from "./nav-bypass"
 import { useState } from "react"
-import { AddTransactionModal } from "./modal/transaction-modal"
-import { AddTransactionForm } from "./form/create-transaction-form"
 import { useTransactionModal } from "@/hooks/use-transaction-modal"
+import { CreateTransactionForm } from "./form/create-transaction-form"
+import Logo from "./logo/logo"
 
 // This is sample data.
 const data = {
@@ -44,45 +32,39 @@ const data = {
       logo:  Wallet,
       plan: "Enterprise",
     },
-    // {
-    //   name: "Acme Corp.",
-    //   logo: AudioWaveform,
-    //   plan: "Startup",
-    // },
-    // {
-    //   name: "Evil Corp.",
-    //   logo: Command,
-    //   plan: "Free",
-    // },
   ],
   navMain: [
     {
       title: "Dashboard",
       url: "/",
       icon: Home,
+      isActive: false,
     },
     {
       title: "Transactions",
       url: "/transactions",
       icon: Sparkles,
+      isActive: false,
     },
     {
       title: "Expenses",
       url: "/expenses",
       icon: Home,
-      isActive: true,
+      isActive: false,
     },
     {
       title: "Income",
       url: "/income",
       icon: Inbox,
       badge: "10",
+      isActive: false,
     },
     {
       title: "Categories",
       url: "/categories",
       icon: Inbox,
       badge: "10",
+      isActive: false,
     },
   ],
   navSecondary: [
@@ -104,35 +86,21 @@ export function SidebarLeft({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
 
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [selectedType, setSelectedType] = useState<string>('')
   const { isModalOpen, setIsModalOpen, handleOpenModal, selectedType } = useTransactionModal();
-
-
-  const handleAddIncome = (data: any) => {
-    console.log('Income added:', data)
-    // Here you would typically save the data to your backend or state management system
-  }
-
-  // const handleOpenModal = (type: string)=>{
-  //   setSelectedType(type);
-  //   setIsModalOpen(true);
-  // }
 
   return (
     <Sidebar className="border-r-0" {...props} collapsible="icon" >
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <Logo/>
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>
         <NavBypass handleOpenModal={handleOpenModal} />
-  
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarRail />
  
-       <AddTransactionForm
+       <CreateTransactionForm
         open={isModalOpen}
         onOpenChange={() => setIsModalOpen(false)}
         transactionType={selectedType}

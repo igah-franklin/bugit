@@ -1,8 +1,4 @@
 import * as React from "react"
-import { Plus } from "lucide-react"
-
-import { Calendars } from "./calendars"
-import { DatePicker } from "./date-picker"
 import { NavUser } from "./nav-user"
 import {
   Sidebar,
@@ -15,12 +11,13 @@ import {
   SidebarRail,
   SidebarSeparator,
 } from "@/components/ui/sidebar"
+import { FinancialHealthCalculator } from "./financial-health/financial-health-calculator"
 
 // This is sample data.
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "Igah",
+    email: "igahfranklin.com",
     avatar: "/avatars/shadcn.jpg",
   },
   calendars: [
@@ -52,11 +49,9 @@ export function SidebarRight({
         <NavUser user={data.user} />
       </SidebarHeader>
       <SidebarContent>
-        <SidebarSeparator className="mx-0" />
-        <DatePicker />
-        <Calendars calendars={data.calendars} />
+        <FinancialHealthCalculator/>
       </SidebarContent>
-      <SidebarFooter>
+      {/* <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton>
@@ -65,7 +60,7 @@ export function SidebarRight({
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-      </SidebarFooter>
+      </SidebarFooter> */}
     </Sidebar>
   )
 }
