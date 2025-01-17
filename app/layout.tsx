@@ -34,7 +34,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <RootProvider>
-          <SidebarProvider>
+          {/* <SidebarProvider>
             <SidebarLeft />
             <SidebarInset>
               <header className="sticky top-0 flex h-14 shrink-0 items-center gap-2 bg-background">
@@ -55,7 +55,8 @@ export default function RootLayout({
               { children }
             </SidebarInset>
             <SidebarRight />
-          </SidebarProvider>
+          </SidebarProvider> */}
+          { children }
         </RootProvider>
       </body>
     </html>
