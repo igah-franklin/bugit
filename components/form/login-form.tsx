@@ -10,8 +10,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { LoginFormValues, loginSchema } from "@/lib/validation-schema"
 import { Icons } from "@/components/icons"
 import { setAccessToken, setRefreshToken } from "@/services/token.service"
-import { signInAction } from "@/actions/sign-in-action"
-import { useRouter } from "next/navigation"
+import { signInAction } from "@/actions/auth/sign-in-action"
+import { redirect, useRouter } from "next/navigation"
+import { googleSignInAction } from "@/actions/auth/google-auth-action"
 
 
 
@@ -54,8 +55,16 @@ export default function LoginForm() {
   
 
   const handleGoogleSignIn = async () => {
-    setIsLoading(true)
-    setError(null)
+    try {
+      const { data, status } = await googleSignInAction();
+      if(status===200){
+        window.open(data.redirectUrl, '_self');
+      }
+      console.log('client data', data);
+      console.log('client res', status);
+    } catch (error) {
+      console.log(error)
+    }
 
   }
 

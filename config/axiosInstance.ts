@@ -2,10 +2,11 @@
 
 import axios from 'axios';
 import { getAccessToken, refreshAccessToken, setAccessToken } from '@/services/token.service';
+import { baseURL } from './baseUrl';
 
 // Create Axios instance
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: baseURL,
   headers: { 'Content-Type': 'application/json' },
   //withCredentials: true, // Include cookies in requests
 });
