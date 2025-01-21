@@ -13,8 +13,6 @@ export default function VerifyPage() {
   const [verificationState, setVerificationState] = useState<'loading' | 'success' | 'error' | 'idle'>('idle');
   const router = useRouter();
 
-  console.log(code, 'google code')
-
   useEffect(() => {
     async function verifyCode() {
       if (!code) {
@@ -36,7 +34,7 @@ export default function VerifyPage() {
           setVerificationState('success');
           setAccessToken(data.accessToken);
           setRefreshToken(data.refreshToken);
-          router.push('/')
+          //router.push('/')
         } else {
           setVerificationState('error');
         }
@@ -57,7 +55,7 @@ export default function VerifyPage() {
         <h1 className="text-2xl font-bold text-gray-900 mb-4">Code Verification</h1>
         
         {verificationState === 'idle' && !code && (
-          <div className="text-gray-600">
+          <div className="text-gray-600 bg-yellow-500">
             No verification code provided
           </div>
         )}

@@ -6,7 +6,6 @@ import axiosInstance from '@/config/axiosInstance';
 export const getAccessToken = () => Cookies.get('accessToken');
 
 export const setAccessToken = (token: string) => {
-  console.log(token, 'access token ste')
   Cookies.set('accessToken', token, { secure: true });
 };
 

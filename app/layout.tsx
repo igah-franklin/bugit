@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { SidebarLeft } from "@/components/sidebar-left";
-import { Separator } from "@/components/ui/separator";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb";
-import { SidebarRight } from "@/components/sidebar-right";
 import RootProvider from "@/components/providers/root-provider";
 
 const geistSans = Geist({
@@ -34,28 +29,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <RootProvider>
-          {/* <SidebarProvider>
-            <SidebarLeft />
-            <SidebarInset>
-              <header className="sticky top-0 flex h-14 shrink-0 items-center gap-2 bg-background">
-                <div className="flex flex-1 items-center gap-2 px-3">
-                  <SidebarTrigger />
-                  <Separator orientation="vertical" className="mr-2 h-4" />
-                  <Breadcrumb>
-                    <BreadcrumbList>
-                      <BreadcrumbItem>
-                        <BreadcrumbPage className="line-clamp-1">
-                          Manage all your transactions in one place
-                        </BreadcrumbPage>
-                      </BreadcrumbItem>
-                    </BreadcrumbList>
-                  </Breadcrumb>
-                </div>
-              </header>
-              { children }
-            </SidebarInset>
-            <SidebarRight />
-          </SidebarProvider> */}
           { children }
         </RootProvider>
       </body>
