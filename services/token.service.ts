@@ -3,7 +3,14 @@
 import Cookies from 'js-cookie';
 import axiosInstance from '@/config/axiosInstance';
 
-export const getAccessToken = () => Cookies.get('accessToken');
+// export const getAccessToken = () => Cookies.get('accessToken');
+export const getAccessToken = () => {
+  if (typeof window !== 'undefined') {
+    return Cookies.get('accessToken');
+  }
+  return undefined;
+};
+
 
 export const setAccessToken = (token: string) => {
   Cookies.set('accessToken', token, { secure: true });

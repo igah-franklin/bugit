@@ -34,7 +34,7 @@ export default function VerifyPage() {
           setVerificationState('success');
           setAccessToken(data.accessToken);
           setRefreshToken(data.refreshToken);
-          //router.push('/')
+          router.push('/')
         } else {
           setVerificationState('error');
         }

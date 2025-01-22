@@ -3,11 +3,14 @@ import { useState } from "react"
 import { TransactionCard } from "@/components/card/transaction-card"
 import FinancialHistory from "@/components/financial-history/financial-history"
 import { TransactionHistoryGrid } from "@/components/transaction-history-grid/transaction-history-grid"
+import { getAccessToken } from "@/services/token.service"
 
 export default function dashboard() {
   const [expenses, setExpenses] = useState(1234.56)
   const [income, setIncome] = useState(2345.67)
   const balance = income - expenses
+  const token = getAccessToken();
+  console.log(token, 'token')
   return (
     <>
       <div className="mx-2 md:mx-0">

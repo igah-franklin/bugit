@@ -1,12 +1,23 @@
 'use client'
+
+import { fetchCategoryAction } from "@/actions/category/fetch-category-action";
 import CreateCategoryForm from "@/components/form/create-category-form";
 import { CategoriesTable } from "@/components/table/categories/categories-table";
 import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function CategoriesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { isLoading, isFetching, data } = useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategoryAction,
+    refetchOnWindowFocus: false,
+  });
+
+  const categoryData =  data?.data.data || [];
 
     return (
       <>
@@ -21,7 +32,7 @@ export default function CategoriesPage() {
               </div>
           </div>
           <div className="mx-auto w-full max-w-5xl rounded-xl bg-muted/50 p-5">
-            <CategoriesTable />
+            <CategoriesTable categories={categoryData}/>
           </div>
         </div>
         <CreateCategoryForm

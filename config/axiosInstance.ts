@@ -1,12 +1,15 @@
 'use server'
 
 import axios from 'axios';
+import { cookies } from 'next/headers';
 import { getAccessToken, refreshAccessToken, setAccessToken } from '@/services/token.service';
 import { baseURL } from './baseUrl';
 
+
+console.log(baseURL, 'baseU')
 // Create Axios instance
 const axiosInstance = axios.create({
-  baseURL: baseURL,
+  baseURL: 'http://localhost:5000/api',
   headers: { 'Content-Type': 'application/json' },
   //withCredentials: true, // Include cookies in requests
 });
@@ -26,9 +29,13 @@ const retryFailedRequests = (newToken: string) => {
 
 // Add request interceptor
 axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = getAccessToken(); // Get access token
-    console.log('axios instance token', token);
+  async(config) => {
+    // const token = getAccessToken(); // Get access token
+    // console.log('axios instance token', token);
+    const cookieStore = await cookies();
+    const token = cookieStore.get('accessToken')?.value; // Get the token from cookies
+
+    console.log('axios instance token from cookies', token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -57,7 +64,6 @@ axiosInstance.interceptors.response.use(
           isRefreshing = false;
 
           retryFailedRequests(newToken); // Retry queued requests
-          setAccessToken(newToken);
           originalRequest.headers.Authorization = `Bearer ${newToken}`;
           return axiosInstance(originalRequest); // Retry original request
         } catch (refreshError) {
