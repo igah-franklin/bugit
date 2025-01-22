@@ -35,7 +35,7 @@ export default function CreateCategoryForm({ open, onOpenChange}:AddCategoryForm
               form.reset({
                 categoryName: '',
               });
-              toast.success(`Category ${data?.name} created successfully 🎉`,{
+              toast.success(`Category ${data?.data?.data.categoryName} created successfully 🎉`,{
                   id: 'create-category'
               });
               await queryClient.invalidateQueries({
