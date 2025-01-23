@@ -9,3 +9,4 @@ export const refreshTokenPath = '/auth/refresh-token';
 export const categoryPath = '/category';
 export const transactionPath = '/transaction';
 export const transactionByTypePath = '/transaction-type';
+export const financialSummaryPath = '/finacial-summary';

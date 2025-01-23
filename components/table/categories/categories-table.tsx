@@ -62,7 +62,7 @@ import { useState } from "react";
                             </>
                             <DeleteModal
                                     title='Are you sure you want to delete this transaction' 
-                                    type='delete'
+                                    type='category'
                                     description='This action cannot be undone. This will permanently delete the transaction.'
                                     actionBtnText='Delete'
                                     dataId={category._id}

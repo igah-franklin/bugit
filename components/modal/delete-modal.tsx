@@ -1,4 +1,5 @@
 import { deleteCategoryAction } from "@/actions/category/delete-category-action"
+import { deleteTransactionAction } from "@/actions/transactions/delete-transaction-action"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -19,7 +20,7 @@ import { toast } from "sonner"
   interface IDeleteModal {
     dataId: string,
     title: string, 
-    type: 'delete' | 'other', 
+    type: 'category' | 'transaction', 
     description: string, 
     actionBtnText: string,
     children: ReactNode
@@ -36,28 +37,28 @@ import { toast } from "sonner"
   }: IDeleteModal) {
 
     const queryClient = useQueryClient();
-
+    const  deleteItem = type === 'transaction' ? () => deleteTransactionAction(dataId) : () => deleteCategoryAction(dataId)
     const { mutate, isPending } = useMutation({
-      mutationFn: () =>
-        deleteCategoryAction(dataId),
+      mutationFn: deleteItem,
+      //() => deleteCategoryAction(dataId),
         onSuccess: async (data: any) => {
-          toast.success(`Category deleted successfully 🎉`, {
-            id: 'delete-category',
+          toast.success(`${type} deleted successfully 🎉`, {
+            id: `delete-${type}`,
           });
           await queryClient.invalidateQueries({
-            queryKey: ['categories'],
+            queryKey: [`${type==='category' ? 'categories' : 'transactions'}`],
           });
         },
         onError: () => {
-          toast.error('Something went wrong editing the category', {
-            id: 'delete-category',
+          toast.error(`Something went wrong deleting ${type}`, {
+            id: `delete-${type}`,
           });
         },
     });
 
       const handleDeleteItem = useCallback(()=>{
         toast.loading('deleting category...', {
-          id: 'delete-category',
+          id: `delete-${type}`,
         });
         mutate();
       },[mutate])
@@ -79,7 +80,8 @@ import { toast } from "sonner"
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction 
             onClick={handleDeleteItem}
-            className={`${type==='delete' ? 'bg-red-500/10 text-red-400' : 'bg-emerald-400/10 text-emerald-400'}`}>
+            disabled={isPending}
+            className="bg-red-500/10 text-red-400">
                 { actionBtnText }
             </AlertDialogAction>
           </AlertDialogFooter>

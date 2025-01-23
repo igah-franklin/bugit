@@ -12,7 +12,7 @@ export interface IGridTransaction {
     description: string;
   }
   export type ITransactions = {
-    id: string;
+    _id: string;
     category: ICategories;
     description: string;
     type: 'income' | 'expense';

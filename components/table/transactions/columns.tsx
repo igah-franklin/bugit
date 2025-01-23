@@ -101,6 +101,7 @@ export const columns: ColumnDef<ITransactions>[] = [
     id: "actions",
     cell: ({ row }) => {
       const transaction = row.original
+      console.log(transaction, 'transaction tab')
       return (
         <>
           <DropdownMenu>
@@ -114,10 +115,10 @@ export const columns: ColumnDef<ITransactions>[] = [
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <ActionModal
                       title='Are you sure you want to delete this transaction' 
-                      type='delete'
+                      type='transaction'
                       description='This action cannot be undone. This will permanently delete the transaction.'
                       actionBtnText='Delete'
-                      dataId={transaction.id}
+                      dataId={transaction._id}
                   >
                       <Button 
                       variant='ghost'

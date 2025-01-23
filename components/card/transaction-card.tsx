@@ -65,7 +65,7 @@ export const TransactionCard: React.FC<BudgetCardProps> = ({ title, amount, type
           {getIcon()}
         </div>
         <div className={`flex items-center gap-3 text-xl font-bold `}>
-        {getSideIcon()} ${animatedAmount.toFixed(2)}
+        {getSideIcon()} ${amount}
         </div>
       </CardContent>
     </Card>
