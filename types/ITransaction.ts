@@ -1,3 +1,8 @@
+export interface ICategories {
+  _id: string;
+  categoryName: string;
+}
+
 export interface IGridTransaction {
     id: string;
     amount: number;
@@ -6,6 +11,14 @@ export interface IGridTransaction {
     category: string;
     description: string;
   }
+  export type ITransactions = {
+    id: string;
+    category: ICategories;
+    description: string;
+    type: 'income' | 'expense';
+    amount: number;
+    date: Date;
+  };
   
   export interface IDayData {
     date: string;
@@ -31,7 +44,3 @@ export interface IGridTransaction {
     description: string;
   }
 
-  export interface ICategories {
-    id: string;
-    categoryName: string;
-  }

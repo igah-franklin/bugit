@@ -12,13 +12,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 import { DataTableColumnHeader } from "../column-header"
-import { IExpense } from "@/types/ITransaction"
+import { IExpense, ITransactions } from "@/types/ITransaction"
 import DeleteModal from "@/components/modal/delete-modal"
 import { useState } from "react"
 import { EditTransactionForm } from "@/components/form/edit-transaction-form"
+import { ITransaction } from "@/utils/transactions"
 
 
-export const columns: ColumnDef<IExpense>[] = [
+export const columns: ColumnDef<ITransactions>[] = [
   {
     accessorKey: "category",
     header: ({ column }) => (
@@ -30,7 +31,7 @@ export const columns: ColumnDef<IExpense>[] = [
     cell: ({ row }) => {
         return (
           <div className="capitalize">
-            {row.original.category}
+            {row.original?.category?.categoryName}
           </div>
         )
     },

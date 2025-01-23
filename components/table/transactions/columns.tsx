@@ -14,9 +14,10 @@ import { ITransaction } from "@/utils/transactions"
 import { DataTableColumnHeader } from "../column-header"
 import { cn } from "@/lib/utils"
 import ActionModal from "../../modal/delete-modal"
+import { ITransactions } from "@/types/ITransaction"
 
 
-export const columns: ColumnDef<ITransaction>[] = [
+export const columns: ColumnDef<ITransactions>[] = [
   {
     accessorKey: "category",
     header: ({ column }) => (
@@ -28,7 +29,7 @@ export const columns: ColumnDef<ITransaction>[] = [
     cell: ({ row }) => {
         return (
           <div className="capitalize">
-            {row.original.category}
+            {row.original?.category?.categoryName}
           </div>
         )
     },

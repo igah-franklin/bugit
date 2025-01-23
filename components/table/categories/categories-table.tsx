@@ -65,7 +65,7 @@ import { useState } from "react";
                                     type='delete'
                                     description='This action cannot be undone. This will permanently delete the transaction.'
                                     actionBtnText='Delete'
-                                    dataId={category.id}
+                                    dataId={category._id}
                                 >
                                     <Button 
                                     variant='ghost'

@@ -31,7 +31,11 @@ import {
 import { useForm } from "react-hook-form"
 import TransactionModal from "../modal/transaction-modal"
 import CreateCategoryForm from "./create-category-form"
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { fetchCategoryAction } from "@/actions/category/fetch-category-action"
+import { toast } from "sonner"
+import { createTransactionAction } from "@/actions/transactions/create-transaction-action"
 
 
 // Simulated categories - replace with your actual data fetching
@@ -53,30 +57,64 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
   const [newCategory, setNewCategory] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
 
+
+  const { isLoading, isFetching, data } = useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategoryAction,
+    refetchOnWindowFocus: false,
+  });
+
+  const categoryData =  data?.data.data || [];
   const form = useForm({
     defaultValues: {
-      amount: "",
+      amount: 0,
       description: "",
       date: new Date(),
-      category: "",
+      categoryId: "",
+      type: transactionType
     },
   })
 
-  const onSubmit = async (data: any) => {
-    console.log(data)
-    // Handle form submission
-    onOpenChange(false)
-  }
+  const queryClient = useQueryClient();
 
-  const handleCreateCategory = () => {
-    if (newCategory.trim()) {
-      const value = newCategory.toLowerCase().replace(/\s+/g, '-')
-      setCategories([...categories, { value, label: newCategory }])
-      form.setValue('category', value)
-      setNewCategory("")
-      setCategoryOpen(false)
-    }
-  }
+      const { mutate, isPending } = useMutation({
+          mutationFn: createTransactionAction,
+          onSuccess: async(data: any)=>{
+              form.reset({
+                amount: 0,
+                description: "",
+                date: new Date(),
+                categoryId: "",
+              });
+              toast.success(`Transaction created successfully`,{
+                  id: 'create-transaction'
+              });
+              await queryClient.invalidateQueries({
+                  queryKey: ['transactions']
+              });
+            onOpenChange(false);
+          },
+          onError: ()=>{
+              toast.error('something went wrong creating a transaction',{
+                   id: 'create-transaction'
+              })
+          }
+      })
+
+ 
+      useEffect(() => {
+        form.reset({
+          ...form.getValues(),
+          type: transactionType,
+        });
+      }, [transactionType, form]);
+
+      const onSubmit = useCallback((values: any)=>{
+        toast.loading('...creating transaction',{
+            id: 'create-transaction',
+        });
+        mutate(values);
+    }, [mutate])
 
   return (
     <>
@@ -159,7 +197,7 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
 
                 <FormField
                 control={form.control}
-                name="category"
+                name="categoryId"
                 render={({ field }) => (
                     <FormItem>
                     <FormLabel>Category</FormLabel>
@@ -174,11 +212,7 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
                                 !field.value && "text-muted-foreground"
                             )}
                             >
-                            {field.value
-                                ? categories.find(
-                                    (category) => category.value === field.value
-                                )?.label
-                                : "Select category..."}
+                            {field.value ? categoryData.find((category: any) => category._id === field.value)?.categoryName : "Select category..."}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                         </FormControl>
@@ -198,20 +232,20 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
                                 <CommandList>
                                     <CommandEmpty>No categories found.</CommandEmpty>
                                     <CommandGroup>
-                                    {categories.map((category) => (
+                                    {categoryData.map((category: any) => (
                                         <CommandItem
-                                        key={category.value}
-                                        value={category.value}
+                                        key={category._id}
+                                        value={category._id}
                                         onSelect={() => {
-                                            form.setValue("category", category.value)
+                                            form.setValue("categoryId", category._id)
                                             setCategoryOpen(false)
                                         }}
                                         >
-                                        {category.label}
+                                        {category.categoryName}
                                         <Check
                                             className={cn(
                                             "ml-auto",
-                                            field.value === category.value ? "opacity-100" : "opacity-0"
+                                            field.value === category._id ? "opacity-100" : "opacity-0"
                                             )}
                                         />
                                         </CommandItem>
@@ -237,14 +271,6 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
         />
     </>
   )
-}
-
-
-
-interface AddIncomeModalProps {
-    transactionType: string;
-    isOpen: boolean
-    onClose: () => void
 }
 
 

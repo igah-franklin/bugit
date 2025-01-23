@@ -35,11 +35,10 @@ axiosInstance.interceptors.request.use(
     const cookieStore = await cookies();
     const token = cookieStore.get('accessToken')?.value; // Get the token from cookies
 
-    console.log('axios instance token from cookies', token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    //setAccessToken('');
+    
     return config;
   },
   (error) => Promise.reject(error)

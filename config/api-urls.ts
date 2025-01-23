@@ -7,3 +7,5 @@ export const googleSignInPath = '/auth/google';
 export const verifygoogleCodePath = '/auth/google/callback';
 export const refreshTokenPath = '/auth/refresh-token';
 export const categoryPath = '/category';
+export const transactionPath = '/transaction';
+export const transactionByTypePath = '/transaction-type';

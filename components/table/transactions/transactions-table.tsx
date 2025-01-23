@@ -28,13 +28,14 @@ import { DataTableViewOptions } from "../column-toggle"
 import { Button } from "../../ui/button"
 import CustomDropdown from "@/components/custom-dropdown/custom-dropdown"
 import DownloadPdf, { DownloadCsv } from "@/components/documents/transaction-pdf"
+import { ITransactions } from "@/types/ITransaction"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function TransactionTable<TData extends ITransaction, TValue>({
+export function TransactionTable<TData extends ITransactions, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -53,7 +54,7 @@ export function TransactionTable<TData extends ITransaction, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
         pagination: {
-            pageSize: 4,
+            pageSize: 10,
         }
     },
     state: {
@@ -64,8 +65,8 @@ export function TransactionTable<TData extends ITransaction, TValue>({
 
   const categoriesOptions = useMemo(() => {
     return Array.from(new Set(data.map((transaction) => transaction.category))).map((category) => ({
-      label: category,
-      value: category,
+      label: category?.categoryName,
+      value: category?.categoryName,
     }));
   }, [data]);
   

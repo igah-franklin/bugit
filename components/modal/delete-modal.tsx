@@ -1,3 +1,4 @@
+import { deleteCategoryAction } from "@/actions/category/delete-category-action"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -10,8 +11,10 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
   import { Button } from "@/components/ui/button"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { CircleAlert } from "lucide-react"
-import { ReactNode } from "react"
+import { ReactNode, useCallback } from "react"
+import { toast } from "sonner"
 
   interface IDeleteModal {
     dataId: string,
@@ -23,11 +26,41 @@ import { ReactNode } from "react"
   }
 
   
-  export default function DeleteModal({ title, type, description, actionBtnText, dataId, children }: IDeleteModal) {
+  export default function DeleteModal({ 
+    title, 
+    type, 
+    description, 
+    actionBtnText, 
+    dataId, 
+    children 
+  }: IDeleteModal) {
 
-      const handleDeleteItem = ()=>{
-        console.log(dataId, 'transaction id')
-      }
+    const queryClient = useQueryClient();
+
+    const { mutate, isPending } = useMutation({
+      mutationFn: () =>
+        deleteCategoryAction(dataId),
+        onSuccess: async (data: any) => {
+          toast.success(`Category deleted successfully 🎉`, {
+            id: 'delete-category',
+          });
+          await queryClient.invalidateQueries({
+            queryKey: ['categories'],
+          });
+        },
+        onError: () => {
+          toast.error('Something went wrong editing the category', {
+            id: 'delete-category',
+          });
+        },
+    });
+
+      const handleDeleteItem = useCallback(()=>{
+        toast.loading('deleting category...', {
+          id: 'delete-category',
+        });
+        mutate();
+      },[mutate])
 
     return (
       <AlertDialog>

@@ -6,9 +6,20 @@ import { useTransactionModal } from "@/hooks/use-transaction-modal";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { CreateTransactionForm } from "@/components/form/create-transaction-form";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTransactionsAction } from "@/actions/transactions/fetch-transactions-action";
 
 export default function TransactionsPage() {
   const { isModalOpen, setIsModalOpen, handleOpenModal, selectedType } = useTransactionModal();
+
+  const { isLoading, isFetching, data } = useQuery({
+    queryKey: ["transactions"],
+    queryFn: () => fetchTransactionsAction({}),
+    refetchOnWindowFocus: false,
+  });
+
+  const transactionData =  data?.data.data || [];
+
   return (
     <>
     <div className="">
@@ -29,7 +40,7 @@ export default function TransactionsPage() {
               </div>
           </div>
       <div className="lg:mx-auto lg:w-full lg:max-w-5xl rounded-xl bg-muted/50 p-5 mx-2 ">
-        <TransactionTable columns={columns} data={transactions} />
+        <TransactionTable columns={columns} data={transactionData} />
       </div>
     </div>
     <CreateTransactionForm

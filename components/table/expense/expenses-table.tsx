@@ -23,7 +23,7 @@ import {
 import React, { useMemo } from "react"
 
 
-import { IExpense } from "@/types/ITransaction"
+import { IExpense, ITransactions } from "@/types/ITransaction"
 import { DataTableFacetedFilter } from "../data-table-faceted-filter"
 import { DataTableViewOptions } from "../column-toggle"
 import { Button } from "@/components/ui/button"
@@ -33,7 +33,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
 }
 
-export function ExpenseTable<TData extends IExpense, TValue>({
+export function ExpenseTable<TData extends ITransactions, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -63,8 +63,8 @@ export function ExpenseTable<TData extends IExpense, TValue>({
 
   const categoriesOptions = useMemo(() => {
     return Array.from(new Set(data.map((transaction) => transaction.category))).map((category) => ({
-      label: category,
-      value: category,
+      label: category?.categoryName,
+      value: category?.categoryName,
     }));
   }, [data]);
   
