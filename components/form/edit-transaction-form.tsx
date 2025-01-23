@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from "react"
-import { CalendarIcon, Check, ChevronsUpDown, PlusIcon } from 'lucide-react'
+import { CalendarIcon, Check, ChevronsUpDown, Loader2, PlusIcon } from 'lucide-react'
 import { format } from "date-fns"
 
 import { cn } from "@/lib/utils"
@@ -31,6 +31,13 @@ import {
 import { useForm } from "react-hook-form"
 import TransactionModal from "../modal/transaction-modal"
 import CreateCategoryForm from "./create-category-form"
+import { useCallback, useEffect, useState } from "react"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { fetchCategoryAction } from "@/actions/category/fetch-category-action"
+import { toast } from "sonner"
+import { createTransactionAction } from "@/actions/transactions/create-transaction-action"
+import EditCategoryForm from "./edit-category-form"
+import { editTransactionAction } from "@/actions/transactions/edit-transaction-action"
 
 
 // Simulated categories - replace with your actual data fetching
@@ -40,51 +47,107 @@ const initialCategories = [
   { value: "investments", label: "Investments" },
 ]
 
-interface EditTransactionFormProps {
-  transactionData: any;
+interface IEditTransactionProps {
   transactionType: string;
+  transactionData: any,
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function EditTransactionForm({ transactionType, transactionData, open, onOpenChange }: EditTransactionFormProps) {
-  const [categories, setCategories] = React.useState(initialCategories)
-  const [categoryOpen, setCategoryOpen] = React.useState(false)
-  const [newCategory, setNewCategory] = React.useState("")
-  const [isModalOpen, setIsModalOpen] = React.useState(false)
+interface IPayload {
+    amount: number,
+    description: string,
+    date: Date,
+    categoryId: string,
+    type: string
+}
 
+export function EditTransactionForm({ transactionType, transactionData, open, onOpenChange }: IEditTransactionProps) {
+  const [categories, setCategories] = useState(initialCategories)
+  const [categoryOpen, setCategoryOpen] = useState(false)
+  const [newCategory, setNewCategory] = useState("")
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  console.log(transactionData, 'transactionData*****')
+
+
+  const { isLoading, isFetching, data } = useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategoryAction,
+    refetchOnWindowFocus: false,
+  });
+
+  const categoryData =  data?.data.data || [];
+  
   const form = useForm({
     defaultValues: {
-      amount: transactionData.amount,
-      description: transactionData.description,
-      date: transactionData.date,
-      category: transactionData.category,
+      amount: transactionData.amount || 0,
+      description: transactionData.description || '',
+      date: transactionData.date || new Date(),
+      categoryId: transactionData._id || '',
+      type: transactionType
     },
   })
 
-  const onSubmit = async (data: any) => {
-    console.log(data, 'data===>')
-    // Handle form submission
-    onOpenChange(false)
-  }
+  const queryClient = useQueryClient();
 
-  const handleEditCategory = () => {
-    if (newCategory.trim()) {
-      const value = newCategory.toLowerCase().replace(/\s+/g, '-')
-      setCategories([...categories, { value, label: newCategory }])
-      form.setValue('category', value)
-      setNewCategory("")
-      setCategoryOpen(false)
-    }
-  }
+      const { mutate, isPending } = useMutation({
+          mutationFn: (values: { amount: string, description: string, date: Date, categoryId: string, type: string }) => editTransactionAction (transactionData._id, {
+            type: values.type, 
+            amount: values.amount, 
+            description: values.description, 
+            categoryId: values.categoryId
+        }),
+          onSuccess: async(data: any)=>{
+              form.reset({
+                amount: 0,
+                description: "",
+                date: new Date(),
+                categoryId: "",
+              });
+              toast.success(`Transaction created successfully`,{
+                  id: 'edit-transaction'
+              });
+              await queryClient.invalidateQueries({
+                  queryKey: ['transactions']
+              });
+            onOpenChange(false);
+          },
+          onError: ()=>{
+              toast.error('something went wrong editing a transaction',{
+                   id: 'edit-transaction'
+              })
+          }
+      })
+
+    // Update the form's default values when the category changes
+    useEffect(() => {
+        if (transactionData) {
+        form.reset({
+            amount: transactionData.amount || 0,
+            description: transactionData.description || '',
+            date: transactionData.date || new Date(),
+            categoryId: transactionData._id || '',
+            type: transactionType
+        });
+        }
+    }, [transactionData, form]);
+ 
+
+      const onSubmit = useCallback((values: { amount: string, description: string, date: Date, categoryId: string, type: string })=>{
+        toast.loading('...editing transaction',{
+            id: 'edit-transaction',
+        });
+        mutate(values);
+    }, [mutate])
 
   return (
     <>
         <TransactionModal
-            title={`Update ${transactionType}`}
-            open={open} 
-            onOpenChange={onOpenChange}
-            transactionType={transactionType}
+        title={`Edit ${transactionType}`}
+        open={open} 
+        onOpenChange={onOpenChange}
+        transactionType={transactionType}
         >
             <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -156,9 +219,10 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
                     </FormItem>
                 )}
                 />
+
                 <FormField
                 control={form.control}
-                name="category"
+                name="categoryId"
                 render={({ field }) => (
                     <FormItem>
                     <FormLabel>Category</FormLabel>
@@ -173,11 +237,7 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
                                 !field.value && "text-muted-foreground"
                             )}
                             >
-                            {field.value
-                                ? categories.find(
-                                    (category) => category.value === field.value
-                                )?.label
-                                : "Select category..."}
+                            {field.value ? categoryData.find((category: any) => category._id === field.value)?.categoryName : "Select category..."}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                         </FormControl>
@@ -197,20 +257,20 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
                                 <CommandList>
                                     <CommandEmpty>No categories found.</CommandEmpty>
                                     <CommandGroup>
-                                    {categories.map((category) => (
+                                    {categoryData.map((category: any) => (
                                         <CommandItem
-                                        key={category.value}
-                                        value={category.value}
+                                        key={category._id}
+                                        value={category._id}
                                         onSelect={() => {
-                                            form.setValue("category", category.value)
+                                            form.setValue("categoryId", category._id)
                                             setCategoryOpen(false)
                                         }}
                                         >
-                                        {category.label}
+                                        {category.categoryName}
                                         <Check
                                             className={cn(
                                             "ml-auto",
-                                            field.value === category.value ? "opacity-100" : "opacity-0"
+                                            field.value === category._id ? "opacity-100" : "opacity-0"
                                             )}
                                         />
                                         </CommandItem>
@@ -224,8 +284,13 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
                 )}
                 />
 
-                <Button type="submit" className="w-full">
-                Update { transactionType }
+                <Button 
+                    type="submit" 
+                    className="w-full font-bold"
+                    disabled={isPending}
+                >
+                {transactionData && `Save ${transactionType}`}
+                {isPending && <Loader2 className="animate-spin" />}
                 </Button>
             </form>
             </Form>
@@ -237,4 +302,5 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
     </>
   )
 }
+
 

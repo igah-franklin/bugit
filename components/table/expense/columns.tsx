@@ -100,17 +100,17 @@ export const columns: ColumnDef<ITransactions>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem onClick={() => setEditFormOpen(true)}><Edit2/> Edit</DropdownMenuItem>
-                  <DeleteModal
-                      title='Are you sure you want to delete this transaction' 
-                      type='delete'
-                      description='This action cannot be undone. This will permanently delete the transaction.'
-                      actionBtnText='Delete'
-                      dataId={transaction.id}
-                  >
-                      <Button 
-                      variant='ghost'
-                      className={cn('w-full text-red-400 justify-start p-2 hover:text-red-400 hover:bg-transparent')}><Trash2/> Delete</Button>
-                  </DeleteModal>
+              <DeleteModal
+                  title='Are you sure you want to delete this transaction' 
+                  type='transaction'
+                  description='This action cannot be undone. This will permanently delete the transaction.'
+                  actionBtnText='Delete'
+                  dataId={transaction._id}
+              >
+                  <Button 
+                  variant='ghost'
+                  className={cn('w-full text-red-400 justify-start p-2 hover:text-red-400 hover:bg-transparent')}><Trash2/> Delete</Button>
+              </DeleteModal>
             </DropdownMenuContent>
           </DropdownMenu>
           <EditTransactionForm

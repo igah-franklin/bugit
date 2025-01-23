@@ -11,7 +11,6 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-  import { Button } from "@/components/ui/button"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { CircleAlert } from "lucide-react"
 import { ReactNode, useCallback } from "react"
@@ -40,7 +39,6 @@ import { toast } from "sonner"
     const  deleteItem = type === 'transaction' ? () => deleteTransactionAction(dataId) : () => deleteCategoryAction(dataId)
     const { mutate, isPending } = useMutation({
       mutationFn: deleteItem,
-      //() => deleteCategoryAction(dataId),
         onSuccess: async (data: any) => {
           toast.success(`${type} deleted successfully 🎉`, {
             id: `delete-${type}`,
