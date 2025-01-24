@@ -6,6 +6,7 @@ import { TransactionHistoryGrid } from "@/components/transaction-history-grid/tr
 import { getAccessToken } from "@/services/token.service"
 import { fetchFinancialSummaryAction } from "@/actions/transactions/fetch-financial-summary-actions"
 import { useQuery } from "@tanstack/react-query"
+import { fetchTransactionsAction } from "@/actions/transactions/fetch-transactions-action"
 
 export default function dashboard() {
   const [expenses, setExpenses] = useState(1234.56)
@@ -18,9 +19,18 @@ export default function dashboard() {
     refetchOnWindowFocus: false,
   });
 
-  const financialSummaryData =  data?.data.data || [];
-  console.log(financialSummaryData[0], 'financialSummaryData financialSummaryData')
+  const { isLoading: isLoadingTransactions, isFetching: isFetchingTransactions, data: transactions } = useQuery({
+    queryKey: ["transactions"],
+    queryFn: () => fetchTransactionsAction({}),
+    refetchOnWindowFocus: false,
+  });
 
+  const financialSummaryData =  data?.data.data || [];
+
+
+  const transactionData =  transactions?.data.data || [];
+ console.log(transactionData, 'grid');
+ console.log(financialSummaryData, 'financialSummaryData grid');
   
   return (
     <>
@@ -35,7 +45,7 @@ export default function dashboard() {
         {/* <div className="w-full max-w-5xl mx-auto rounded-xl bg-mute grid grid-cols-1 md:grid-cols-3 gap-4 p-2" >
         </div> */}
         <div className="w-full max-w-5xl mx-auto bg-muted/50 p-2 my-5 rounded-md hidden lg:block">
-          <TransactionHistoryGrid />
+          <TransactionHistoryGrid  transactionData={transactionData}/>
         </div>
         <div className="md:w-full max-w-5xl mx-auto bg-muted/50 p-2 rounded-md mt-5 md:mt-0">
           <FinancialHistory />
