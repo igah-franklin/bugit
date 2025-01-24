@@ -11,7 +11,7 @@ export interface IGridTransaction {
     category: string;
     description: string;
   }
-  export type ITransactions = {
+  export interface ITransactions  {
     _id: string;
     category: ICategories;
     description: string;

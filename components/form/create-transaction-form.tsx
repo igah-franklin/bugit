@@ -90,8 +90,11 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
                   id: 'create-transaction'
               });
               await queryClient.invalidateQueries({
-                  queryKey: ['transactions']
+                  queryKey: ['transactions'],
+                //   refetchActive: true,
+                //   refetchInactive: true,
               });
+              await queryClient.invalidateQueries({ queryKey: ['financial-summary'] });
             onOpenChange(false);
           },
           onError: ()=>{
@@ -113,7 +116,11 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
         toast.loading('...creating transaction',{
             id: 'create-transaction',
         });
-        mutate(values);
+        const formattedValues = {
+            ...values,
+            amount: Number(values.amount),
+          };
+        mutate(formattedValues);
     }, [mutate])
 
   return (

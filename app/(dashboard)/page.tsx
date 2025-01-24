@@ -9,9 +9,13 @@ import { useQuery } from "@tanstack/react-query"
 import { fetchTransactionsAction } from "@/actions/transactions/fetch-transactions-action"
 
 export default function dashboard() {
-  const [expenses, setExpenses] = useState(1234.56)
-  const [income, setIncome] = useState(2345.67)
-  const balance = income - expenses
+  const [selectedYear, setSelectedYear] = useState<string>("2025");
+  const [selectedMonth, setSelectedMonth] = useState<string>("");
+  const [selectedMonthNumber, setSelectedMonthNumber] = useState<string | null>(null);
+
+  // console.log(selectedYear, 'selectedYear');
+  // console.log(selectedMonth, 'selectedMonth');
+  // console.log(selectedMonthNumber, 'selectedMonthNumber');
   
   const { isLoading, isFetching, data } = useQuery({
     queryKey: ["financial-summary"],
@@ -19,18 +23,16 @@ export default function dashboard() {
     refetchOnWindowFocus: false,
   });
 
-  const { isLoading: isLoadingTransactions, isFetching: isFetchingTransactions, data: transactions } = useQuery({
+  const { isLoading: isLoadingTransactions, isFetching: isFetchingTransactions, data: transactions, refetch } = useQuery({
     queryKey: ["transactions"],
-    queryFn: () => fetchTransactionsAction({}),
+    queryFn: () => fetchTransactionsAction({ year: selectedYear, month: selectedMonthNumber || '' }),
     refetchOnWindowFocus: false,
   });
 
   const financialSummaryData =  data?.data.data || [];
-
-
   const transactionData =  transactions?.data.data || [];
- console.log(transactionData, 'grid');
- console.log(financialSummaryData, 'financialSummaryData grid');
+
+  console.log(financialSummaryData, 'grid');
   
   return (
     <>
@@ -48,7 +50,15 @@ export default function dashboard() {
           <TransactionHistoryGrid  transactionData={transactionData}/>
         </div>
         <div className="md:w-full max-w-5xl mx-auto bg-muted/50 p-2 rounded-md mt-5 md:mt-0">
-          <FinancialHistory />
+          <FinancialHistory
+            refetchFn={refetch}
+            transactionData={transactionData}
+            selectedMonth={selectedMonth} 
+            setSelectedMonth={setSelectedMonth}
+            selectedYear={selectedYear}
+            setSelectedYear={setSelectedYear}
+            setSelectedMonthNumber={setSelectedMonthNumber}
+          />
         </div>
       </div>
     </>

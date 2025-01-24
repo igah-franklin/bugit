@@ -10,5 +10,13 @@ export const loginSchema = z.object({
   }),
 })
 
+export const transactionSchema = z.object({
+  amount: z.number().nonnegative().refine(value => !isNaN(value), {
+    message: "Amount must be a valid number.",
+  }),
+  description: z.string().trim(),
+  date: z.date(),
+});
+
 export type LoginFormValues = z.infer<typeof loginSchema>
 

@@ -6,6 +6,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { FinancialHistoryMockData } from "@/utils/transaction-history"
 import { ChartConfig, ChartContainer } from "../ui/chart"
+import { ITransactions } from "@/types/ITransaction"
+
+
+interface IFinancialHistory {
+  transactionData: ITransactions[];
+  refetchFn: () => void;
+  selectedMonth: string;
+  setSelectedMonth: (selectedMonth: string) => void;
+  selectedYear: string;
+  setSelectedYear: (selectedYear: string) => void;
+  setSelectedMonthNumber: (selectedMonthNumber: string)=> void;
+}
 
 
 const chartConfig = {
@@ -19,7 +31,10 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-const years = [2024, 2023, 2022]
+const years = Array.from(
+  { length: 3 },
+  (_, i) => new Date().getFullYear() - i
+);
 const months = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
@@ -36,17 +51,17 @@ const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
         <div className="flex items-center gap-2">
           <div className="h-3 w-3 rounded-full bg-red-500" />
           <span className="text-gray-400">Expense</span>
-          <span className="ml-auto text-white">{expenses.toFixed(2)} €</span>
+          <span className="ml-auto text-white">{expenses.toFixed(2)} $</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="h-3 w-3 rounded-full bg-emerald-500" />
           <span className="text-gray-400">Income</span>
-          <span className="ml-auto text-white">{income.toFixed(2)} €</span>
+          <span className="ml-auto text-white">{income.toFixed(2)} $</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="h-3 w-3 rounded-full bg-white" />
           <span className="text-gray-400">Balance</span>
-          <span className="ml-auto text-white">{balance.toFixed(2)} €</span>
+          <span className="ml-auto text-white">{balance.toFixed(2)} $</span>
         </div>
       </div>
     )
@@ -54,38 +69,74 @@ const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   return null
 }
 
-export default function FinancialHistory() {
+export default function FinancialHistory({
+  transactionData,
+  refetchFn,
+  selectedMonth,
+  setSelectedMonth,
+  selectedYear,
+  setSelectedYear,
+  setSelectedMonthNumber
+}: IFinancialHistory) {
   const [viewMode, setViewMode] = useState<"year" | "month">("year")
-  const [selectedYear, setSelectedYear] = useState<number>(2024)
-  const [selectedMonth, setSelectedMonth] = useState<string | "all">("all")
+
+  const handleFilterByYear = (value: string) => {
+    setSelectedYear(value)
+    setSelectedMonth("all");
+    setSelectedMonthNumber('')
+    refetchFn();
+  };
+  const handleFilterByMonth = (value: string) => {
+    setSelectedMonth(value);
+    const monthIndex = months.indexOf(value) + 1 // Convert month to number (January -> 1)
+    setSelectedMonthNumber(monthIndex.toString()) 
+    refetchFn();
+  };
 
   const chartData = useMemo(() => {
     if (viewMode === "year") {
-      // Aggregate data by year
-      return years.map(year => {
-        const yearData = FinancialHistoryMockData.filter(item => item.year === year)
+      return years.map((year) => {
+        const yearData = transactionData.filter(
+          (item) => new Date(item.date).getFullYear() === year
+        );
         return {
           month: year.toString(),
-          income: yearData.reduce((sum, item) => sum + item.income, 0),
-          expenses: yearData.reduce((sum, item) => sum + item.expenses, 0)
-        }
-      })
+          income: yearData.reduce(
+            (sum, item) => sum + (item.type === "income" ? item.amount : 0),
+            0
+          ),
+          expenses: yearData.reduce(
+            (sum, item) => sum + (item.type === "expense" ? item.amount : 0),
+            0
+          ),
+        };
+      });
     } else {
-      // Show monthly data for selected year
-      let filteredData = FinancialHistoryMockData.filter(item => item.year === selectedYear)
-      
-      // Apply month filter if a specific month is selected
-      if (selectedMonth !== "all") {
-        filteredData = filteredData.filter(item => item.month === selectedMonth)
-      }
-      
-      return filteredData.map(item => ({
-        month: item.month,
-        income: item.income,
-        expenses: item.expenses
-      }))
+      const filteredData = transactionData.filter(
+        (item) =>
+          new Date(item.date).getFullYear().toString() === selectedYear &&
+          (selectedMonth === "all" ||
+            months[new Date(item.date).getMonth()] === selectedMonth)
+      );
+
+      return months.map((month) => {
+        const monthData = filteredData.filter(
+          (item) => months[new Date(item.date).getMonth()] === month
+        );
+        return {
+          month,
+          income: monthData.reduce(
+            (sum, item) => sum + (item.type === "income" ? item.amount : 0),
+            0
+          ),
+          expenses: monthData.reduce(
+            (sum, item) => sum + (item.type === "expense" ? item.amount : 0),
+            0
+          ),
+        };
+      });
     }
-  }, [viewMode, selectedYear, selectedMonth])
+  }, [viewMode, selectedYear, selectedMonth, transactionData]);
 
   return (
     <div className="w-full shadow-md grid grid-cols-1">
@@ -98,7 +149,8 @@ export default function FinancialHistory() {
                 className={`px-3 py-1 text-sm rounded-lg ${viewMode === "year" ? "bg-neutral-800" : "text-gray-400"}`}
                 onClick={() => {
                   setViewMode("year")
-                  setSelectedMonth("all")
+                  setSelectedMonth("all");
+                  setSelectedMonthNumber('')
                 }}
               >
                 Year
@@ -111,10 +163,13 @@ export default function FinancialHistory() {
               </button>
             </div>
             <Select 
-              defaultValue={selectedYear.toString()} 
+              // defaultValue={selectedYear.toString()} 
+              // onValueChange={(value) => {
+              //   handleFilterByYear(value);
+              // }}
+              value={selectedYear.toString()} // Bind the state directly
               onValueChange={(value) => {
-                setSelectedYear(parseInt(value))
-                setSelectedMonth("all")
+                handleFilterByYear(value); // Update the state and trigger the filter
               }}
               disabled={viewMode === "year"}
             >
@@ -131,7 +186,9 @@ export default function FinancialHistory() {
             </Select>
             <Select 
               value={selectedMonth}
-              onValueChange={setSelectedMonth}
+              onValueChange={
+                (value)=>{ handleFilterByMonth(value);}
+              }
               disabled={viewMode === "year"}
             >
               <SelectTrigger className="w-[140px] bg-neutral-900 border-0">
