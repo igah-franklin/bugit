@@ -4,7 +4,6 @@ import { useState, useMemo } from "react"
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, TooltipProps } from "recharts"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { FinancialHistoryMockData } from "@/utils/transaction-history"
 import { ChartConfig, ChartContainer } from "../ui/chart"
 import { ITransactions } from "@/types/ITransaction"
 

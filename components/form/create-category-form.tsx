@@ -31,7 +31,7 @@ export default function CreateCategoryForm({ open, onOpenChange}:AddCategoryForm
 
       const { mutate, isPending } = useMutation({
           mutationFn: createCategoryAction,
-          onSuccess: async(data: any)=>{
+          onSuccess: async(data)=>{
               form.reset({
                 categoryName: '',
               });

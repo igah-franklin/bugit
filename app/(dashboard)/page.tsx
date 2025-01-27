@@ -16,13 +16,13 @@ export default function Dashboard() {
   // console.log(selectedMonth, 'selectedMonth');
   // console.log(selectedMonthNumber, 'selectedMonthNumber');
   
-  const { isLoading, isFetching, data } = useQuery({
+  const { data } = useQuery({
     queryKey: ["financial-summary"],
     queryFn: fetchFinancialSummaryAction,
     refetchOnWindowFocus: false,
   });
 
-  const { isLoading: isLoadingTransactions, isFetching: isFetchingTransactions, data: transactions, refetch } = useQuery({
+  const {  data: transactions, refetch } = useQuery({
     queryKey: ["transactions"],
     queryFn: () => fetchTransactionsAction({ year: selectedYear, month: selectedMonthNumber || '' }),
     refetchOnWindowFocus: false,

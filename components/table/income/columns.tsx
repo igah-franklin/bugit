@@ -12,11 +12,10 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 import { DataTableColumnHeader } from "../column-header"
-import { IExpense, ITransactions } from "@/types/ITransaction"
+import { ITransactions } from "@/types/ITransaction"
 import DeleteModal from "@/components/modal/delete-modal"
 import { useState } from "react"
 import { EditTransactionForm } from "@/components/form/edit-transaction-form"
-import { ITransaction } from "@/utils/transactions"
 
 
 export const columns: ColumnDef<ITransactions>[] = [

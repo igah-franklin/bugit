@@ -1,7 +1,7 @@
 
 
 'use client'
-import { Loader2, type LightbulbIcon as LucideProps } from "lucide-react"
+import { Loader2 } from "lucide-react"
 
 export const Icons = {
   spinner: Loader2,

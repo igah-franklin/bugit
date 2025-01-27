@@ -1,7 +1,7 @@
 'use client'
 
 import { ReactNode } from "react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu"
 
 
 interface ICustomDropdownProps {

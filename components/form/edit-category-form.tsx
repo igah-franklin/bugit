@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form';
@@ -30,7 +30,7 @@ export default function EditCategoryForm({ category, open, onOpenChange }: EditC
   const { mutate, isPending } = useMutation({
     mutationFn: (values: { categoryName: string }) =>
       editCategoryAction(category._id, { categoryName: values.categoryName }),
-    onSuccess: async (data: any) => {
+    onSuccess: async (data) => {
       toast.success(`Category edited to ${data?.data?.data.categoryName} successfully 🎉`, {
         id: 'edit-category',
       });

@@ -11,7 +11,7 @@ interface Tile {
   color: string
 }
 
-export default function loginPage() {
+export default function LoginPage() {
   const [tiles, setTiles] = useState<Tile[]>([
     {
       id: 1,

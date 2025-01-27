@@ -1,6 +1,6 @@
 import React from 'react'
-import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from './ui/sidebar'
-import { EyeIcon, MoreHorizontal, PlusIcon } from 'lucide-react'
+import { SidebarGroup, SidebarGroupLabel, SidebarMenu } from './ui/sidebar'
+import { PlusIcon } from 'lucide-react'
 
 interface INavBypassProps {
     handleOpenModal: (item: string) => void

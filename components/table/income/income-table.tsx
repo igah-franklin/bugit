@@ -21,9 +21,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import React, { useMemo } from "react"
-import { ITransaction } from "@/utils/transactions"
 
-import { IExpense, ITransactions } from "@/types/ITransaction"
+import { ITransactions } from "@/types/ITransaction"
 import { DataTableFacetedFilter } from "../data-table-faceted-filter"
 import { DataTableViewOptions } from "../column-toggle"
 import { Button } from "@/components/ui/button"
