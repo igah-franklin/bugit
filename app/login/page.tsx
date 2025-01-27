@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import LoginForm from "@/components/form/login-form"
+import Link from "next/link"
 
 interface Tile {
   id: number
@@ -132,6 +133,9 @@ export default function loginPage() {
             <p className="mt-2 text-gray-400">Proceed to access your account</p>
           </div>
           <LoginForm />
+          <div className="text-center">
+            Don't have an account? <Link href={'/register'} className="text-emerald-400">register</Link>
+          </div>
         </div>
       </div>
     </div>

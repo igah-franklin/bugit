@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import LoginForm from "@/components/form/login-form"
+import Link from "next/link"
+import SignUpForm from "@/components/form/signup-form"
 
 interface Tile {
   id: number
@@ -15,18 +16,18 @@ export default function loginPage() {
     {
       id: 1,
       content: (
-        <h2 className="text-2xl font-semibold text-black">
+        <h2 className="text-2xl font-semibold text-white">
           Total Care.
           <br />
           Total Different.
         </h2>
       ),
-      color: "bg-purple-400/90",
+      color: "bg-muted/50",
     },
     {
       id: 2,
       content: null,
-      color: "bg-gray-400/20",
+      color: "bg-muted/50",
     },
     {
       id: 3,
@@ -35,20 +36,20 @@ export default function loginPage() {
           <div className="flex justify-end mb-2">
             <span className="text-2xl">+</span>
           </div>
-          <p className="text-xl text-black">Building trust in blockchain technology</p>
+          <p className="text-xl text-white">Monitor transactions</p>
         </>
       ),
-      color: "bg-yellow-100/90",
+      color: "bg-red-300/90",
     },
     {
       id: 4,
       content: <div className="w-12 h-12 border-4 border-black transform rotate-45" />,
-      color: "bg-purple-400/90",
+      color: "bg-[#033430]",
     },
     {
       id: 5,
       content: null,
-      color: "bg-gray-400/20",
+      color: "bg-white",
     },
     {
       id: 6,
@@ -131,7 +132,10 @@ export default function loginPage() {
             <h2 className="text-4xl font-bold text-white">Sign Up</h2>
             <p className="mt-2 text-gray-400">Proceed to create your account</p>
           </div>
-          <LoginForm />
+          <SignUpForm />
+          <div className="text-center">
+            Have an account? <Link href={'/login'} className="text-emerald-400">sign in</Link>
+          </div>
         </div>
       </div>
     </div>
