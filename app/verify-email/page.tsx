@@ -39,6 +39,7 @@ export default function VerifyEmailPage() {
           setVerificationState('error');
         }
       } catch (error) {
+        console.log(error)
         setVerificationState('error');
       }
     }

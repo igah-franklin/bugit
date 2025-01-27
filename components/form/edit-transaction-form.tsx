@@ -35,8 +35,6 @@ import { useCallback, useEffect, useState } from "react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { fetchCategoryAction } from "@/actions/category/fetch-category-action"
 import { toast } from "sonner"
-import { createTransactionAction } from "@/actions/transactions/create-transaction-action"
-import EditCategoryForm from "./edit-category-form"
 import { editTransactionAction } from "@/actions/transactions/edit-transaction-action"
 
 
@@ -63,9 +61,7 @@ interface IPayload {
 }
 
 export function EditTransactionForm({ transactionType, transactionData, open, onOpenChange }: IEditTransactionProps) {
-  const [categories, setCategories] = useState(initialCategories)
   const [categoryOpen, setCategoryOpen] = useState(false)
-  const [newCategory, setNewCategory] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 
@@ -74,6 +70,8 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
     queryFn: fetchCategoryAction,
     refetchOnWindowFocus: false,
   });
+
+  console.log(isLoading, isFetching)
 
   const categoryData =  data?.data.data || [];
   
@@ -96,7 +94,7 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
             description: values.description, 
             categoryId: values.categoryId
         }),
-          onSuccess: async(data: any)=>{
+          onSuccess: async()=>{
               form.reset({
                 amount: 0,
                 description: "",

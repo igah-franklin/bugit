@@ -2,12 +2,12 @@
 
 import axios from 'axios';
 import { cookies } from 'next/headers';
-import { getAccessToken, refreshAccessToken, setAccessToken } from '@/services/token.service';
+import { refreshAccessToken } from '@/services/token.service';
 import { baseURL } from './baseUrl';
 
 // Create Axios instance
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: baseURL,
   headers: { 'Content-Type': 'application/json' },
   //withCredentials: true, // Include cookies in requests
 });

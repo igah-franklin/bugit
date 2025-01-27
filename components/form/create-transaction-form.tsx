@@ -38,13 +38,6 @@ import { toast } from "sonner"
 import { createTransactionAction } from "@/actions/transactions/create-transaction-action"
 
 
-// Simulated categories - replace with your actual data fetching
-const initialCategories = [
-  { value: "salary", label: "Salary" },
-  { value: "freelance", label: "Freelance" },
-  { value: "investments", label: "Investments" },
-]
-
 interface AddIncomeFormProps {
   transactionType: string;
   open: boolean;
@@ -52,9 +45,7 @@ interface AddIncomeFormProps {
 }
 
 export function CreateTransactionForm({ transactionType, open, onOpenChange }: AddIncomeFormProps) {
-  const [categories, setCategories] = useState(initialCategories)
   const [categoryOpen, setCategoryOpen] = useState(false)
-  const [newCategory, setNewCategory] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
 
 
@@ -63,6 +54,8 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
     queryFn: fetchCategoryAction,
     refetchOnWindowFocus: false,
   });
+
+  console.log(isLoading, isFetching)
 
   const categoryData =  data?.data.data || [];
   const form = useForm({
@@ -79,7 +72,7 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
 
       const { mutate, isPending } = useMutation({
           mutationFn: createTransactionAction,
-          onSuccess: async(data: any)=>{
+          onSuccess: async()=>{
               form.reset({
                 amount: 0,
                 description: "",

@@ -10,10 +10,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ITransaction } from "@/utils/transactions"
 import { DataTableColumnHeader } from "../column-header"
 import { cn } from "@/lib/utils"
-import ActionModal from "../../modal/delete-modal"
 import { ITransactions } from "@/types/ITransaction"
 import DeleteModal from "../../modal/delete-modal"
 import { EditTransactionForm } from "@/components/form/edit-transaction-form"

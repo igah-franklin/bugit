@@ -3,13 +3,7 @@ import { NavUser } from "./nav-user"
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarRail,
-  SidebarSeparator,
 } from "@/components/ui/sidebar"
 import { FinancialHealthCalculator } from "./financial-health/financial-health-calculator"
 

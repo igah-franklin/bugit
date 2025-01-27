@@ -22,7 +22,6 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import NavBypass from "./nav-bypass"
-import { useState } from "react"
 import { useTransactionModal } from "@/hooks/use-transaction-modal"
 import { CreateTransactionForm } from "./form/create-transaction-form"
 import Logo from "./logo/logo"

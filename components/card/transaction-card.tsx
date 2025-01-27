@@ -13,6 +13,8 @@ interface BudgetCardProps {
 export const TransactionCard: React.FC<BudgetCardProps> = ({ title, amount, type }) => {
   const [animatedAmount, setAnimatedAmount] = useState(0)
 
+  console.log(animatedAmount)
+
   useEffect(() => {
     const interval = setInterval(() => {
       setAnimatedAmount((prev) => {

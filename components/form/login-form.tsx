@@ -10,7 +10,7 @@ import { LoginFormValues, loginSchema } from "@/lib/validation-schema"
 import { Icons } from "@/components/icons"
 import { setAccessToken, setRefreshToken } from "@/services/token.service"
 import { signInAction } from "@/actions/auth/sign-in-action"
-import { redirect, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { googleSignInAction } from "@/actions/auth/google-auth-action"
 
 

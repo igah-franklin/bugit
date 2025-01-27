@@ -23,7 +23,7 @@ import {
 import React, { useMemo } from "react"
 
 
-import { IExpense, ITransactions } from "@/types/ITransaction"
+import { ITransactions } from "@/types/ITransaction"
 import { DataTableFacetedFilter } from "../data-table-faceted-filter"
 import { DataTableViewOptions } from "../column-toggle"
 import { Button } from "@/components/ui/button"
