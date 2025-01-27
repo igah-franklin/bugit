@@ -11,8 +11,14 @@ import { toast } from 'sonner';
 import { editCategoryAction } from '@/actions/category/edit-category-action';
 import { Loader2 } from 'lucide-react';
 
+
+interface ICategory {
+  _id: string;
+  categoryName: string;
+}
+
 interface EditCategoryFormProps {
-  category: any;
+  category: ICategory;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }

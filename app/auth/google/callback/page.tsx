@@ -38,7 +38,7 @@ export default function VerifyPage() {
         } else {
           setVerificationState('error');
         }
-      } catch (error: any) {
+      } catch (error) {
         console.log(error)
         setVerificationState('error');
       }

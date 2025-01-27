@@ -47,7 +47,7 @@ export default function VerifyEmailPage() {
     if (token) {
       verifyToken();
     }
-  }, [token]);
+  }, [token, router]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">

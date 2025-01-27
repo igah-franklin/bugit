@@ -14,13 +14,18 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import { cn } from "@/lib/utils";
+import { ICategories } from "@/types/ITransaction";
 // import { categories } from "@/utils/transactions";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { Edit2, MoreHorizontal, Trash2 } from "lucide-react";
 import { useState } from "react";
 
   
-  export function CategoriesTable({ categories }: any) {
+interface ICategoriesProps {
+    categories: ICategories[];
+}
+
+  export function CategoriesTable({ categories }: ICategoriesProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     return (
         <>
@@ -33,8 +38,8 @@ import { useState } from "react";
             </TableRow>
             </TableHeader>
             <TableBody>
-            {categories.map((category: any) => (
-                <TableRow key={category.id}>
+            {categories.map((category: ICategories) => (
+                <TableRow key={category._id}>
                 <TableCell className="font-medium">{category.categoryName}</TableCell>
                 <TableCell className="text-right">
                     <DropdownMenu>

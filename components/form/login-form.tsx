@@ -41,8 +41,9 @@ export default function LoginForm() {
       } else {
         setError("Invalid credentials, please try again.");
       }
-    } catch (error: any) {
-      setError(error?.message || "An error occurred. Please try again later.");
+    } catch (error) {
+      console.log(error)
+      //setError(error?.message || "An error occurred. Please try again later.");
     } finally {
       setIsLoading(false);
     }

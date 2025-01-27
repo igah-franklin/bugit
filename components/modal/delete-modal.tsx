@@ -39,7 +39,7 @@ import { toast } from "sonner"
     const  deleteItem = type === 'transaction' ? () => deleteTransactionAction(dataId) : () => deleteCategoryAction(dataId)
     const { mutate, isPending } = useMutation({
       mutationFn: deleteItem,
-        onSuccess: async (data: any) => {
+        onSuccess: async () => {
           toast.success(`${type} deleted successfully 🎉`, {
             id: `delete-${type}`,
           });
@@ -59,7 +59,7 @@ import { toast } from "sonner"
           id: `delete-${type}`,
         });
         mutate();
-      },[mutate])
+      },[mutate, type])
 
     return (
       <AlertDialog>
