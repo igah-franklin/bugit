@@ -3,12 +3,11 @@ import { useState } from "react"
 import { TransactionCard } from "@/components/card/transaction-card"
 import FinancialHistory from "@/components/financial-history/financial-history"
 import { TransactionHistoryGrid } from "@/components/transaction-history-grid/transaction-history-grid"
-import { getAccessToken } from "@/services/token.service"
 import { fetchFinancialSummaryAction } from "@/actions/transactions/fetch-financial-summary-actions"
 import { useQuery } from "@tanstack/react-query"
 import { fetchTransactionsAction } from "@/actions/transactions/fetch-transactions-action"
 
-export default function dashboard() {
+export default function Dashboard() {
   const [selectedYear, setSelectedYear] = useState<string>("2025");
   const [selectedMonth, setSelectedMonth] = useState<string>("");
   const [selectedMonthNumber, setSelectedMonthNumber] = useState<string | null>(null);

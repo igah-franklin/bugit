@@ -7,7 +7,6 @@ import { columns } from "@/components/table/income/columns";
 import { IncomeTable } from "@/components/table/income/income-table";
 import { Button } from "@/components/ui/button";
 import { useTransactionModal } from "@/hooks/use-transaction-modal";
-import { income } from "@/utils/transactions";
 import { useQuery } from "@tanstack/react-query";
 
 
@@ -16,7 +15,7 @@ import { PlusIcon } from "lucide-react";
 export default function IncomePage() {
   const { isModalOpen, setIsModalOpen, handleOpenModal, selectedType } = useTransactionModal();
 
-  const { isLoading, isFetching, data } = useQuery({
+  const { isFetching, data } = useQuery({
     queryKey: ["transactions"],
     queryFn: ()=> fetchTransactionTypeAction('income'),
     refetchOnWindowFocus: false,

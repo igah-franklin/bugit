@@ -6,13 +6,12 @@ import { columns } from "@/components/table/expense/columns";
 import { ExpenseTable } from "@/components/table/expense/expenses-table";
 import { Button } from "@/components/ui/button";
 import { useTransactionModal } from "@/hooks/use-transaction-modal";
-import { expenses } from "@/utils/transactions";
 import { useQuery } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
 
 export default function ExpensesPage() {
   const { isModalOpen, setIsModalOpen, handleOpenModal, selectedType } = useTransactionModal();
-  const { isLoading, isFetching, data } = useQuery({
+  const { isFetching, data } = useQuery({
     queryKey: ["transactions"],
     queryFn: ()=> fetchTransactionTypeAction('expense'),
     refetchOnWindowFocus: false,

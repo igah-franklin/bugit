@@ -1,7 +1,6 @@
 'use client'
 import { TransactionTable } from "@/components/table/transactions/transactions-table";
 import { columns } from "@/components/table/transactions/columns";
-import { transactions } from "@/utils/transactions";
 import { useTransactionModal } from "@/hooks/use-transaction-modal";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
@@ -13,7 +12,7 @@ import TableSkeleton from "@/components/skeleton/table-skeleton";
 export default function TransactionsPage() {
   const { isModalOpen, setIsModalOpen, handleOpenModal, selectedType } = useTransactionModal();
 
-  const { isLoading, isFetching, data } = useQuery({
+  const { isFetching, data } = useQuery({
     queryKey: ["transactions"],
     queryFn: () => fetchTransactionsAction({}),
     refetchOnWindowFocus: false,

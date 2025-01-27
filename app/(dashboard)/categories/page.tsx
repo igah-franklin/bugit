@@ -7,12 +7,12 @@ import { CategoriesTable } from "@/components/table/categories/categories-table"
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function CategoriesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { isLoading, isFetching, data } = useQuery({
+  const { isFetching, data } = useQuery({
     queryKey: ["categories"],
     queryFn: fetchCategoryAction,
     refetchOnWindowFocus: false,
