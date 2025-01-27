@@ -68,8 +68,6 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
   const [newCategory, setNewCategory] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log(transactionData, 'transactionData*****')
-
 
   const { isLoading, isFetching, data } = useQuery({
     queryKey: ["categories"],

@@ -31,8 +31,6 @@ export default function dashboard() {
 
   const financialSummaryData =  data?.data.data || [];
   const transactionData =  transactions?.data.data || [];
-
-  console.log(financialSummaryData, 'grid');
   
   return (
     <>

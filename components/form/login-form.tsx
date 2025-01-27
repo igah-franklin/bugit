@@ -32,11 +32,8 @@ export default function LoginForm() {
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
     setError(null);
-  
     try {
       const { data: responseData, status } = await signInAction(data);
-      console.log(responseData, 'log data');
-  
       if (status === 200) {
         setAccessToken(responseData.accessToken);
         setRefreshToken(responseData.refreshToken);
@@ -59,8 +56,6 @@ export default function LoginForm() {
       if(status===200){
         window.open(data.redirectUrl, '_self');
       }
-      console.log('client data', data);
-      console.log('client res', status);
     } catch (error) {
       console.log(error)
     }
@@ -77,7 +72,7 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="you@example.com" {...field} />
+                <Input placeholder="Enter your email" {...field} className="py-5" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -90,7 +85,7 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" {...field} />
+                <Input type="password" placeholder="***********" {...field} className="py-5" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -115,7 +110,7 @@ export default function LoginForm() {
             <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
           </div>
         </div>
-        <Button type="button" variant="outline" onClick={handleGoogleSignIn} className="w-full" disabled={isLoading}>
+        <Button type="button" variant="outline" onClick={handleGoogleSignIn} className="w-full py-6" disabled={isLoading}>
           {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           ) : (

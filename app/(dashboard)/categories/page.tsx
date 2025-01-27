@@ -2,6 +2,7 @@
 
 import { fetchCategoryAction } from "@/actions/category/fetch-category-action";
 import CreateCategoryForm from "@/components/form/create-category-form";
+import TableSkeleton from "@/components/skeleton/table-skeleton";
 import { CategoriesTable } from "@/components/table/categories/categories-table";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
@@ -32,7 +33,11 @@ export default function CategoriesPage() {
               </div>
           </div>
           <div className="mx-auto w-full max-w-5xl rounded-xl bg-muted/50 p-5">
-            <CategoriesTable categories={categoryData}/>
+          {
+            isFetching ? <TableSkeleton /> : (
+              <CategoriesTable categories={categoryData}/>
+            )
+          }
           </div>
         </div>
         <CreateCategoryForm

@@ -36,7 +36,6 @@ export const refreshAccessToken = async () => {
     });
   
     const { accessToken, refreshToken: newRefreshToken } = response.data;
-    console.log(accessToken, 'returned accessToken')
   
     // Update tokens in cookies
     setAccessToken(accessToken);

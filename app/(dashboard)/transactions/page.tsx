@@ -8,6 +8,7 @@ import { PlusIcon } from "lucide-react";
 import { CreateTransactionForm } from "@/components/form/create-transaction-form";
 import { useQuery } from "@tanstack/react-query";
 import { fetchTransactionsAction } from "@/actions/transactions/fetch-transactions-action";
+import TableSkeleton from "@/components/skeleton/table-skeleton";
 
 export default function TransactionsPage() {
   const { isModalOpen, setIsModalOpen, handleOpenModal, selectedType } = useTransactionModal();
@@ -40,7 +41,9 @@ export default function TransactionsPage() {
               </div>
           </div>
       <div className="lg:mx-auto lg:w-full lg:max-w-5xl rounded-xl bg-muted/50 p-5 mx-2 ">
+      {isFetching ? <TableSkeleton /> : (
         <TransactionTable columns={columns} data={transactionData} />
+      )}
       </div>
     </div>
     <CreateTransactionForm

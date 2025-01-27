@@ -1,6 +1,7 @@
 'use client'
 import { fetchTransactionTypeAction } from "@/actions/transactions/fetch-transaction-type-action";
 import { CreateTransactionForm } from "@/components/form/create-transaction-form";
+import TableSkeleton from "@/components/skeleton/table-skeleton";
 import { columns } from "@/components/table/income/columns";
 
 import { IncomeTable } from "@/components/table/income/income-table";
@@ -22,7 +23,7 @@ export default function IncomePage() {
   });
 
   const incomeData =  data?.data.data || [];
-  console.log(incomeData, 'incomeData')
+
     return (
       <>
         <div className="flex flex-1 flex-col gap-4 p-4">
@@ -36,7 +37,9 @@ export default function IncomePage() {
               </div>
           </div>
           <div className="mx-auto w-full max-w-5xl rounded-xl bg-muted/50 p-5">
+          { isFetching ? <TableSkeleton /> : (
             <IncomeTable columns={columns} data={incomeData} />
+          )}
           </div>
         </div>
         <CreateTransactionForm

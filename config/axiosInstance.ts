@@ -5,8 +5,6 @@ import { cookies } from 'next/headers';
 import { getAccessToken, refreshAccessToken, setAccessToken } from '@/services/token.service';
 import { baseURL } from './baseUrl';
 
-
-console.log(baseURL, 'baseU')
 // Create Axios instance
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:5000/api',
@@ -59,7 +57,6 @@ axiosInstance.interceptors.response.use(
 
         try {
           const newToken = await refreshAccessToken();
-          console.log(newToken, 'newToken newToken*****')
           isRefreshing = false;
 
           retryFailedRequests(newToken); // Retry queued requests
