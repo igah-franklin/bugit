@@ -134,7 +134,7 @@ export default function LoginPage() {
           </div>
           <LoginForm />
           <div className="text-center">
-            Don't have an account? <Link href={'/register'} className="text-emerald-400">register</Link>
+            Don&lsquo;t have an account? <Link href={'/register'} className="text-emerald-400">register</Link>
           </div>
         </div>
       </div>

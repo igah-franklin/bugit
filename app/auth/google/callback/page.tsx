@@ -38,7 +38,7 @@ export default function VerifyPage() {
         } else {
           setVerificationState('error');
         }
-      } catch (error: any) {
+      } catch (error) {
         console.log(error)
         setVerificationState('error');
       }
@@ -47,7 +47,7 @@ export default function VerifyPage() {
     if (code) {
       verifyCode();
     }
-  }, [code]);
+  }, [code, router]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">

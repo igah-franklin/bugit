@@ -36,15 +36,20 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { fetchCategoryAction } from "@/actions/category/fetch-category-action"
 import { toast } from "sonner"
 import { createTransactionAction } from "@/actions/transactions/create-transaction-action"
+import { ICategories } from "@/types/ITransaction"
 
-
-interface AddIncomeFormProps {
+interface ICategory {
+    _id: string;
+    categoryName: string;
+  }
+  
+interface AddTransactionFormProps {
   transactionType: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function CreateTransactionForm({ transactionType, open, onOpenChange }: AddIncomeFormProps) {
+export function CreateTransactionForm({ transactionType, open, onOpenChange }: AddTransactionFormProps) {
   const [categoryOpen, setCategoryOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -56,8 +61,8 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
   });
 
   console.log(isLoading, isFetching)
-
   const categoryData =  data?.data.data || [];
+
   const form = useForm({
     defaultValues: {
       amount: 0,
@@ -70,7 +75,7 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
 
   const queryClient = useQueryClient();
 
-      const { mutate, isPending } = useMutation({
+      const { mutate } = useMutation({
           mutationFn: createTransactionAction,
           onSuccess: async()=>{
               form.reset({
@@ -105,7 +110,7 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
         });
       }, [transactionType, form]);
 
-      const onSubmit = useCallback((values: any)=>{
+      const onSubmit = useCallback((values: { amount: number})=>{
         toast.loading('...creating transaction',{
             id: 'create-transaction',
         });
@@ -212,7 +217,7 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
                                 !field.value && "text-muted-foreground"
                             )}
                             >
-                            {field.value ? categoryData.find((category: any) => category._id === field.value)?.categoryName : "Select category..."}
+                            {field.value ? categoryData.find((category: ICategory) => category._id === field.value)?.categoryName : "Select category..."}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                         </FormControl>
@@ -232,7 +237,7 @@ export function CreateTransactionForm({ transactionType, open, onOpenChange }: A
                                 <CommandList>
                                     <CommandEmpty>No categories found.</CommandEmpty>
                                     <CommandGroup>
-                                    {categoryData.map((category: any) => (
+                                    {categoryData.map((category: ICategories) => (
                                         <CommandItem
                                         key={category._id}
                                         value={category._id}

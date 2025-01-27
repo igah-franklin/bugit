@@ -37,14 +37,6 @@ import { fetchCategoryAction } from "@/actions/category/fetch-category-action"
 import { toast } from "sonner"
 import { editTransactionAction } from "@/actions/transactions/edit-transaction-action"
 
-
-// Simulated categories - replace with your actual data fetching
-const initialCategories = [
-  { value: "salary", label: "Salary" },
-  { value: "freelance", label: "Freelance" },
-  { value: "investments", label: "Investments" },
-]
-
 interface IEditTransactionProps {
   transactionType: string;
   transactionData: any,
@@ -52,13 +44,6 @@ interface IEditTransactionProps {
   onOpenChange: (open: boolean) => void;
 }
 
-interface IPayload {
-    amount: number,
-    description: string,
-    date: Date,
-    categoryId: string,
-    type: string
-}
 
 export function EditTransactionForm({ transactionType, transactionData, open, onOpenChange }: IEditTransactionProps) {
   const [categoryOpen, setCategoryOpen] = useState(false)

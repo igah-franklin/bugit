@@ -50,7 +50,7 @@ export default function CreateCategoryForm({ open, onOpenChange}:AddCategoryForm
           }
       })
 
-    const onSubmit = useCallback((values: any)=>{
+    const onSubmit = useCallback((values: { categoryName: string })=>{
         toast.loading('...creating category',{
             id: 'create-category',
         });
