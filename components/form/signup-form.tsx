@@ -32,15 +32,15 @@ export default function SignUpForm() {
     setIsLoading(true);
     setError(null);
     try {
-      const { data: responseData, status } = await signUpAction(data);
+      const { status } = await signUpAction(data);
       if (status === 201) {
         router.push('/signup-success')
       } else {
         setError("Invalid credentials, please try again.");
       }
-    } catch (error: any) {
+    } catch (error) {
         console.log(error, 'client err')
-      setError(error?.message || "An error occurred. Please try again later.");
+      //setError(error?.message || "An error occurred. Please try again later.");
     } finally {
       setIsLoading(false);
     }

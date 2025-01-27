@@ -10,12 +10,12 @@ export default function page() {
         <MailCheck className="mx-auto h-16 w-16 text-gray-500 mb-6" />
         <h1 className="text-3xl font-bold text-gray-900 mb-4">Sign Up Successful!</h1>
         <p className="text-lg text-gray-600 mb-6">
-          Thank you for signing up. We've sent a verification email to your inbox. Please check your email and click on
+          Thank you for signing up. We&apos;ve sent a verification email to your inbox. Please check your email and click on
           the verification link to activate your account.
         </p>
         <div className="bg-blue-50 border border-blue-200 rounded-md p-4 mb-6">
           <p className="text-sm text-blue-800">
-            If you don't see the email in your inbox, please check your spam folder.
+            If you don&apos;t see the email in your inbox, please check your spam folder.
           </p>
         </div>
         <Button variant={'secondary'} asChild className="w-full">
