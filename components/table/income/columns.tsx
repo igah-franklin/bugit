@@ -12,13 +12,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 import { DataTableColumnHeader } from "../column-header"
-import { IExpense } from "@/types/ITransaction"
+import { IExpense, ITransactions } from "@/types/ITransaction"
 import DeleteModal from "@/components/modal/delete-modal"
 import { useState } from "react"
 import { EditTransactionForm } from "@/components/form/edit-transaction-form"
+import { ITransaction } from "@/utils/transactions"
 
 
-export const columns: ColumnDef<IExpense>[] = [
+export const columns: ColumnDef<ITransactions>[] = [
   {
     accessorKey: "category",
     header: ({ column }) => (
@@ -30,7 +31,7 @@ export const columns: ColumnDef<IExpense>[] = [
     cell: ({ row }) => {
         return (
           <div className="capitalize">
-            {row.original.category}
+            {row.original?.category?.categoryName}
           </div>
         )
     },
@@ -101,10 +102,10 @@ export const columns: ColumnDef<IExpense>[] = [
               <DropdownMenuItem onClick={() => setEditFormOpen(true)}><Edit2/> Edit</DropdownMenuItem>
                 <DeleteModal
                       title='Are you sure you want to delete this transaction' 
-                      type='delete'
+                      type='transaction'
                       description='This action cannot be undone. This will permanently delete the transaction.'
                       actionBtnText='Delete'
-                      dataId={transaction.id}
+                      dataId={transaction._id}
                   >
                       <Button 
                       variant='ghost'

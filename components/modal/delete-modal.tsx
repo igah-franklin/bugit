@@ -1,3 +1,5 @@
+import { deleteCategoryAction } from "@/actions/category/delete-category-action"
+import { deleteTransactionAction } from "@/actions/transactions/delete-transaction-action"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -9,25 +11,55 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-  import { Button } from "@/components/ui/button"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { CircleAlert } from "lucide-react"
-import { ReactNode } from "react"
+import { ReactNode, useCallback } from "react"
+import { toast } from "sonner"
 
   interface IDeleteModal {
     dataId: string,
     title: string, 
-    type: 'delete' | 'other', 
+    type: 'category' | 'transaction', 
     description: string, 
     actionBtnText: string,
     children: ReactNode
   }
 
   
-  export default function DeleteModal({ title, type, description, actionBtnText, dataId, children }: IDeleteModal) {
+  export default function DeleteModal({ 
+    title, 
+    type, 
+    description, 
+    actionBtnText, 
+    dataId, 
+    children 
+  }: IDeleteModal) {
 
-      const handleDeleteItem = ()=>{
-        console.log(dataId, 'transaction id')
-      }
+    const queryClient = useQueryClient();
+    const  deleteItem = type === 'transaction' ? () => deleteTransactionAction(dataId) : () => deleteCategoryAction(dataId)
+    const { mutate, isPending } = useMutation({
+      mutationFn: deleteItem,
+        onSuccess: async (data: any) => {
+          toast.success(`${type} deleted successfully 🎉`, {
+            id: `delete-${type}`,
+          });
+          await queryClient.invalidateQueries({
+            queryKey: [`${type==='category' ? 'categories' : 'transactions'}`],
+          });
+        },
+        onError: () => {
+          toast.error(`Something went wrong deleting ${type}`, {
+            id: `delete-${type}`,
+          });
+        },
+    });
+
+      const handleDeleteItem = useCallback(()=>{
+        toast.loading('deleting category...', {
+          id: `delete-${type}`,
+        });
+        mutate();
+      },[mutate])
 
     return (
       <AlertDialog>
@@ -46,7 +78,8 @@ import { ReactNode } from "react"
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction 
             onClick={handleDeleteItem}
-            className={`${type==='delete' ? 'bg-red-500/10 text-red-400' : 'bg-emerald-400/10 text-emerald-400'}`}>
+            disabled={isPending}
+            className="bg-red-500/10 text-red-400">
                 { actionBtnText }
             </AlertDialogAction>
           </AlertDialogFooter>

@@ -22,57 +22,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { ITransactions } from '@/types/ITransaction';
 
-interface Transaction {
-  id: string;
-  date: Date;
-  amount: number;
-  type: 'income' | 'expense';
-  category: string;
-  description: string;
+interface ITransactionsProps {
+  transactionData: ITransactions[]
 }
 
 interface DayTransactions {
   income: boolean;
   expense: boolean;
-  transactions: Transaction[];
+  transactions: ITransactions[];
 }
 
-export const TransactionHistoryGrid = () => {
+export const TransactionHistoryGrid = ({ transactionData }: ITransactionsProps) => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedDay, setSelectedDay] = useState<Transaction[] | null>(null);
+  const [selectedDay, setSelectedDay] = useState<ITransactions[] | null>(null);
 
-  // Mock data - replace with real data in production
-  const mockTransactions: Transaction[] = [
-    {
-      id: '1',
-      date: new Date(2024, 0, 15),
-      amount: 1000,
-      type: 'income',
-      category: 'Salary',
-      description: 'Monthly salary'
-    },
-    {
-      id: '2',
-      date: new Date(2024, 0, 15),
-      amount: 50,
-      type: 'expense',
-      category: 'Food',
-      description: 'Groceries'
-    },
-    {
-      id: '3',
-      date: new Date(2025, 1, 15),
-      amount: 50,
-      type: 'income',
-      category: 'Food',
-      description: 'Groceries'
-    },
-    // Add more mock transactions as needed
-  ];
 
   const getTransactionsForDay = (year: number, month: number, day: number): DayTransactions => {
-    const dayTransactions = mockTransactions.filter(transaction => {
+    const dayTransactions = transactionData.filter(transaction => {
       const transactionDate = new Date(transaction.date);
       return (
         transactionDate.getFullYear() === year &&
@@ -128,8 +96,8 @@ export const TransactionHistoryGrid = () => {
                       {format(new Date(selectedYear, month, day), 'PP')}
                     </div>
                     {dayTransactions.transactions.map(t => (
-                      <div key={t.id} className="text-xs">
-                        {t.type === 'income' ? '+' : '-'}${Math.abs(t.amount)} - {t.category}
+                      <div key={t._id} className="text-xs">
+                        {t.type === 'income' ? '+' : '-'}${Math.abs(t.amount)} - {t.category.categoryName}
                       </div>
                     ))}
                   </div>
@@ -180,7 +148,7 @@ export const TransactionHistoryGrid = () => {
           <div className="space-y-4 ">
             {selectedDay?.map(transaction => (
               <div
-                key={transaction.id}
+                key={transaction._id}
                 className={cn(
                   'p-4 rounded-lg dark:bg-black/50',
                   transaction.type === 'income' ? 'bg-green-50' : 'bg-red-50'
@@ -188,7 +156,7 @@ export const TransactionHistoryGrid = () => {
               >
                 <div className="flex justify-between items-start ">
                   <div>
-                    <div className="font-medium">{transaction.category}</div>
+                    {/* <div className="font-medium">{transaction.category.categoryName}</div> */}
                     <div className="text-sm text-gray-500">{transaction.description}</div>
                     <div className="text-xs text-gray-400">
                       {format(transaction.date, 'PPp')}

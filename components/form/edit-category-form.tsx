@@ -1,73 +1,106 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { useForm } from 'react-hook-form'
+import React, { useCallback, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form';
 import { Input } from '../ui/input';
-import { Dialog, DialogTitle } from '@radix-ui/react-dialog';
-import { DialogContent, DialogHeader } from '../ui/dialog';
-import { ICategories } from '@/types/ITransaction';
 import CustomModal from '../modal/custom-modal';
-
-interface ICategoryProps {
-    category: ICategories
-}
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { editCategoryAction } from '@/actions/category/edit-category-action';
+import { Loader2 } from 'lucide-react';
 
 interface EditCategoryFormProps {
-    category: any;
-    open: boolean;
-    onOpenChange: (open: boolean) => void;
-  }
+  category: any;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
 
-export default function EditCategoryForm({ category, open, onOpenChange}:EditCategoryFormProps ) {
+export default function EditCategoryForm({ category, open, onOpenChange }: EditCategoryFormProps) {
+  const form = useForm({
+    defaultValues: {
+      categoryName: category.categoryName,
+    },
+    mode: 'onBlur',
+  });
 
-    const form = useForm({
-        defaultValues: {
-          category: category.categoryName,
-        },
-        mode: "onBlur",
-      })
+  const queryClient = useQueryClient();
 
-      const onSubmit = async (data: any) => {
-        console.log(data)
-        onOpenChange(false)
-      }
+  const { mutate, isPending } = useMutation({
+    mutationFn: (values: { categoryName: string }) =>
+      editCategoryAction(category._id, { categoryName: values.categoryName }),
+    onSuccess: async (data: any) => {
+      toast.success(`Category edited to ${data?.data?.data.categoryName} successfully 🎉`, {
+        id: 'edit-category',
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ['categories'],
+      });
+      onOpenChange(false);
+    },
+    onError: () => {
+      toast.error('Something went wrong editing the category', {
+        id: 'edit-category',
+      });
+    },
+  });
+
+  // Update the form's default values when the category changes
+//   useEffect(() => {
+//     if (category) {
+//       form.reset({
+//         categoryName: category.categoryName || '',
+//       });
+//     }
+//   }, [category, form]);
+
+  const onSubmit = useCallback(
+    (values: { categoryName: string }) => {
+      toast.loading('Editing category...', {
+        id: 'edit-category',
+      });
+      mutate(values);
+    },
+    [mutate]
+  );
+
   return (
     <>
-        <CustomModal
-            title='Edit category'
-            open={open} 
-            onOpenChange={onOpenChange}
-        >
-          <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <FormField
-                        control={form.control}
-                        name="category"
-                        rules={{ required: "Category is required" }}
-                        render={({ field, fieldState }) => (
-                            <FormItem>
-                                <FormLabel>Category</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Enter category"
-                                        type="text"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                {fieldState.error && (
-                                    <p className="text-red-500 text-sm">{fieldState.error.message}</p>
-                                )}
-                            </FormItem>
-                        )}
+      <CustomModal title="Edit category" open={open} onOpenChange={onOpenChange}>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="categoryName"
+              rules={{ required: 'Category name is required' }}
+              render={({ field, fieldState }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter category"
+                      type="text"
+                      {...field}
                     />
-                    <Button type="submit" className="w-1/2">
-                        Edit Category
-                    </Button>
-                </form>
-            </Form>
-    </CustomModal>
+                  </FormControl>
+                  {fieldState.error && (
+                    <p className="text-red-500 text-sm">{fieldState.error.message}</p>
+                  )}
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="w-full"
+            >
+              {!isPending && 'Save'}
+              {isPending && <Loader2 className="animate-spin" />}
+            </Button>
+          </form>
+        </Form>
+      </CustomModal>
     </>
-  )
+  );
 }
