@@ -10,8 +10,9 @@ import { setAccessToken, setRefreshToken } from '@/services/token.service';
 export default function VerifyPage() {
   // const searchParams = useSearchParams();
   // const code = searchParams.get('code');
-  const searchParams = new URLSearchParams(document.location.search);
-  const code = searchParams.get('code');
+  //const searchParams = new URLSearchParams(document.location.search);
+  const code = new URL(window.location.href).searchParams.get('code');
+  //const code = searchParams.get('code');
   const [verificationState, setVerificationState] = useState<'loading' | 'success' | 'error' | 'idle'>('idle');
   const router = useRouter();
 
