@@ -28,7 +28,7 @@ export default function layout({ children }: { children:ReactNode }) {
                   </Breadcrumb>
                 </div>
               </header>
-              <Suspense>
+              <Suspense fallback={<div>Loading...</div>}>
                 {children}
               </Suspense>
             </SidebarInset>
