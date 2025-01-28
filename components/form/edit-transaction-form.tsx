@@ -128,7 +128,7 @@ export function EditTransactionForm({ transactionType, transactionData, triggerB
             type: transactionType
         });
         }
-    }, [transactionData, form]);
+    }, [transactionData, transactionType, form]);
  
 
       const onSubmit = useCallback((values: { amount: number, description: string, date: Date, categoryId: string, type: string })=>{
