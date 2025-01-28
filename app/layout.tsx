@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import RootProvider from "@/components/providers/root-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,9 @@ export default function RootLayout({
       >
          <Toaster richColors position="bottom-right" />
         <RootProvider>
+          <Suspense fallback={<div>....loading</div>}>
           { children }
+          </Suspense>
         </RootProvider>
       </body>
     </html>
