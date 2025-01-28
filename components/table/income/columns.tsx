@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -14,7 +13,6 @@ import { cn } from "@/lib/utils"
 import { DataTableColumnHeader } from "../column-header"
 import { ITransactions } from "@/types/ITransaction"
 import DeleteModal from "@/components/modal/delete-modal"
-import { useState } from "react"
 import { EditTransactionForm } from "@/components/form/edit-transaction-form"
 
 
@@ -86,7 +84,6 @@ export const columns: ColumnDef<ITransactions>[] = [
     id: "actions",
     cell: ({ row }) => {
       const transaction = row.original
-      const [isEditFormOpen, setEditFormOpen] = useState(false);
       return (
         <>
           <DropdownMenu>
@@ -98,7 +95,11 @@ export const columns: ColumnDef<ITransactions>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => setEditFormOpen(true)}><Edit2/> Edit</DropdownMenuItem>
+                <EditTransactionForm
+                  transactionType={'income'}
+                  transactionData={transaction}
+                  triggerBtnText={<Button variant="ghost" className="w-full justify-start"><Edit2/> Edit</Button>}
+                />
                 <DeleteModal
                       title='Are you sure you want to delete this transaction' 
                       type='transaction'
@@ -109,15 +110,9 @@ export const columns: ColumnDef<ITransactions>[] = [
                       <Button 
                       variant='ghost'
                       className={cn('w-full text-red-400 justify-start p-2 hover:text-red-400 hover:bg-transparent')}><Trash2/> Delete</Button>
-                  </DeleteModal>
+                </DeleteModal>
             </DropdownMenuContent>
           </DropdownMenu>
-          <EditTransactionForm
-            transactionType={'income'}
-            transactionData={transaction}
-            open={isEditFormOpen}
-            onOpenChange={setEditFormOpen}
-          />
         </>
       )
     },

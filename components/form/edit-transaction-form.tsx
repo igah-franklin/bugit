@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from "react"
-import { CalendarIcon, Check, ChevronsUpDown, Loader2, PlusIcon } from 'lucide-react'
+import { CalendarIcon, Check, ChevronsUpDown, Edit2, Loader2, PlusIcon } from 'lucide-react'
 import { format } from "date-fns"
 
 import { cn } from "@/lib/utils"
@@ -29,13 +29,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { useForm } from "react-hook-form"
-import TransactionModal from "../modal/transaction-modal"
 import CreateCategoryForm from "./create-category-form"
 import { useCallback, useEffect, useState } from "react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { fetchCategoryAction } from "@/actions/category/fetch-category-action"
 import { toast } from "sonner"
 import { editTransactionAction } from "@/actions/transactions/edit-transaction-action"
+import EditModal from "../modal/edit-modal"
+import { ITransactions } from "@/types/ITransaction"
 
 
 interface ICategory {
@@ -43,26 +44,26 @@ interface ICategory {
     categoryName: string;
 }
 
-interface ITransactionDataProps {
-    _id: string;
-    categoryId: string;
-    description: string;
-    type: 'income' | 'expense';
-    amount: number;
-    date: Date;
-}
+// interface ITransactionDataProps {
+//     _id: string;
+//     categoryId: string;
+//     description: string;
+//     type: 'income' | 'expense';
+//     amount: number;
+//     date: Date;
+// }
 
 interface IEditTransactionProps {
   transactionType: string;
-  transactionData: ITransactionDataProps,
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  transactionData: ITransactions,
+  triggerBtnText: React.ReactNode;
 }
 
 
-export function EditTransactionForm({ transactionType, transactionData, open, onOpenChange }: IEditTransactionProps) {
+export function EditTransactionForm({ transactionType, transactionData, triggerBtnText }: IEditTransactionProps) {
   const [categoryOpen, setCategoryOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
 
   const { isLoading, isFetching, data } = useQuery({
@@ -107,7 +108,7 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
               await queryClient.invalidateQueries({
                   queryKey: ['transactions']
               });
-            onOpenChange(false);
+              setIsEditModalOpen(false);
           },
           onError: ()=>{
               toast.error('something went wrong editing a transaction',{
@@ -139,11 +140,12 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
 
   return (
     <>
-        <TransactionModal
+        <EditModal
         title={`Edit ${transactionType}`}
-        open={open} 
-        onOpenChange={onOpenChange}
+        open={isEditModalOpen} 
+        onOpenChange={setIsEditModalOpen}
         transactionType={transactionType}
+        triggerBtnText={triggerBtnText}
         >
             <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -290,7 +292,7 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
                 </Button>
             </form>
             </Form>
-        </TransactionModal>
+        </EditModal>
         <CreateCategoryForm
             open={isModalOpen}
             onOpenChange={() => setIsModalOpen(false)}
