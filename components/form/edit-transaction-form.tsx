@@ -37,9 +37,24 @@ import { fetchCategoryAction } from "@/actions/category/fetch-category-action"
 import { toast } from "sonner"
 import { editTransactionAction } from "@/actions/transactions/edit-transaction-action"
 
+
+interface ICategory {
+    _id: string;
+    categoryName: string;
+}
+
+interface ITransactionDataProps {
+    _id: string;
+    categoryId: string;
+    description: string;
+    type: 'income' | 'expense';
+    amount: number;
+    date: Date;
+}
+
 interface IEditTransactionProps {
   transactionType: string;
-  transactionData: any,
+  transactionData: ITransactionDataProps,
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
@@ -62,7 +77,7 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
   
   const form = useForm({
     defaultValues: {
-      amount: transactionData.amount || 0,
+      amount: Number(transactionData.amount) || 0,
       description: transactionData.description || '',
       date: transactionData.date || new Date(),
       categoryId: transactionData._id || '',
@@ -73,7 +88,7 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
   const queryClient = useQueryClient();
 
       const { mutate, isPending } = useMutation({
-          mutationFn: (values: { amount: string, description: string, date: Date, categoryId: string, type: string }) => editTransactionAction (transactionData._id, {
+          mutationFn: (values: { amount: number, description: string, date: Date, categoryId: string, type: string }) => editTransactionAction (transactionData._id, {
             type: values.type, 
             amount: values.amount, 
             description: values.description, 
@@ -115,7 +130,7 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
     }, [transactionData, form]);
  
 
-      const onSubmit = useCallback((values: { amount: string, description: string, date: Date, categoryId: string, type: string })=>{
+      const onSubmit = useCallback((values: { amount: number, description: string, date: Date, categoryId: string, type: string })=>{
         toast.loading('...editing transaction',{
             id: 'edit-transaction',
         });
@@ -218,7 +233,7 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
                                 !field.value && "text-muted-foreground"
                             )}
                             >
-                            {field.value ? categoryData.find((category: any) => category._id === field.value)?.categoryName : "Select category..."}
+                            {field.value ? categoryData.find((category: ICategory) => category._id === field.value)?.categoryName : "Select category..."}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                         </FormControl>
@@ -238,7 +253,7 @@ export function EditTransactionForm({ transactionType, transactionData, open, on
                                 <CommandList>
                                     <CommandEmpty>No categories found.</CommandEmpty>
                                     <CommandGroup>
-                                    {categoryData.map((category: any) => (
+                                    {categoryData.map((category: ICategory) => (
                                         <CommandItem
                                         key={category._id}
                                         value={category._id}
