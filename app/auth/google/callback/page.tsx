@@ -9,16 +9,10 @@ import { setAccessToken, setRefreshToken } from '@/services/token.service';
 
 export default function VerifyPage() {
   const [verificationState, setVerificationState] = useState<'loading' | 'success' | 'error' | 'idle'>('idle');
-  const router = useRouter();
 
-  // Use Suspense for searchParams hook
   return (
     <Suspense fallback={<LoadingIndicator />}>
-      <VerifyContent
-        setVerificationState={setVerificationState}
-        verificationState={verificationState}
-        router={router}
-      />
+      <VerifyContent setVerificationState={setVerificationState} verificationState={verificationState} />
     </Suspense>
   );
 }
@@ -26,15 +20,14 @@ export default function VerifyPage() {
 function VerifyContent({
   setVerificationState,
   verificationState,
-  router,
 }: {
   setVerificationState: React.Dispatch<
     React.SetStateAction<'loading' | 'success' | 'error' | 'idle'>
   >;
   verificationState: 'loading' | 'success' | 'error' | 'idle';
-  router: ReturnType<typeof useRouter>;
 }) {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const code = searchParams.get('code');
 
   useEffect(() => {
