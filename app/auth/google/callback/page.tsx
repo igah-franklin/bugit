@@ -23,9 +23,6 @@ export default function VerifyPage() {
       setVerificationState('loading');
       
       try {
-        // Replace this with your actual verification logic
-        // Example: const response = await fetch(`/api/verify?code=${code}`);
-        // await new Promise(resolve => setTimeout(resolve, 1500));
         const { data, status } = await verifyGoogleCodeAction(code);
         
         // Simulate successful verification
