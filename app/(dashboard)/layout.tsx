@@ -1,11 +1,9 @@
-
-'use client'
 import { SidebarLeft } from '@/components/sidebar-left'
 import { SidebarRight } from '@/components/sidebar-right'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from '@/components/ui/breadcrumb'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { Separator } from '@radix-ui/react-separator'
-import React, { ReactNode, Suspense } from 'react'
+import React, { ReactNode } from 'react'
 
 export default function layout({ children }: { children:ReactNode }) {
   return (
@@ -28,9 +26,7 @@ export default function layout({ children }: { children:ReactNode }) {
                   </Breadcrumb>
                 </div>
               </header>
-              <Suspense fallback={<div>Loading...</div>}>
-                {children}
-              </Suspense>
+              { children }
             </SidebarInset>
             <SidebarRight />
         </SidebarProvider>

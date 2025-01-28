@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+// import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CheckCircle2, XCircle, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -8,7 +8,9 @@ import { verifyGoogleCodeAction } from '@/actions/auth/verify-google-code-action
 import { setAccessToken, setRefreshToken } from '@/services/token.service';
 
 export default function VerifyPage() {
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
+  // const code = searchParams.get('code');
+  const searchParams = new URLSearchParams(document.location.search);
   const code = searchParams.get('code');
   const [verificationState, setVerificationState] = useState<'loading' | 'success' | 'error' | 'idle'>('idle');
   const router = useRouter();
