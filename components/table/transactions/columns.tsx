@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -15,7 +14,6 @@ import { cn } from "@/lib/utils"
 import { ITransactions } from "@/types/ITransaction"
 import DeleteModal from "../../modal/delete-modal"
 import { EditTransactionForm } from "@/components/form/edit-transaction-form"
-import { useState } from "react"
 
 
 export const columns: ColumnDef<ITransactions>[] = [

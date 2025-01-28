@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -14,7 +13,6 @@ import { cn } from "@/lib/utils"
 import { DataTableColumnHeader } from "../column-header"
 import DeleteModal from "@/components/modal/delete-modal"
 import { ITransactions } from "@/types/ITransaction"
-import { useState } from "react"
 import { EditTransactionForm } from "@/components/form/edit-transaction-form"
 
 
