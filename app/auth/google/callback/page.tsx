@@ -1,7 +1,6 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CheckCircle2, XCircle, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { verifyGoogleCodeAction } from '@/actions/auth/verify-google-code-action';
@@ -9,26 +8,14 @@ import { setAccessToken, setRefreshToken } from '@/services/token.service';
 
 export default function VerifyPage() {
   const [verificationState, setVerificationState] = useState<'loading' | 'success' | 'error' | 'idle'>('idle');
-
-  return (
-    <Suspense fallback={<LoadingIndicator />}>
-      <VerifyContent setVerificationState={setVerificationState} verificationState={verificationState} />
-    </Suspense>
-  );
-}
-
-function VerifyContent({
-  setVerificationState,
-  verificationState,
-}: {
-  setVerificationState: React.Dispatch<
-    React.SetStateAction<'loading' | 'success' | 'error' | 'idle'>
-  >;
-  verificationState: 'loading' | 'success' | 'error' | 'idle';
-}) {
-  const searchParams = useSearchParams();
+  const [code, setCode] = useState<string | null>(null); // Track the code value
   const router = useRouter();
-  const code = searchParams.get('code');
+
+  // Fetch the query parameters manually using `window.location.search` inside `useEffect`
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setCode(params.get('code')); // Extract `code` parameter
+  }, []);
 
   useEffect(() => {
     async function verifyCode() {
@@ -102,14 +89,6 @@ function VerifyContent({
           )}
         </div>
       </div>
-    </div>
-  );
-}
-
-function LoadingIndicator() {
-  return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <Loader2 className="h-12 w-12 text-blue-500 animate-spin" />
     </div>
   );
 }
