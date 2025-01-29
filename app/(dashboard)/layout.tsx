@@ -1,11 +1,32 @@
+'use client'
 import { SidebarLeft } from '@/components/sidebar-left'
 import { SidebarRight } from '@/components/sidebar-right'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from '@/components/ui/breadcrumb'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { getAccessToken } from '@/services/token.service'
 import { Separator } from '@radix-ui/react-separator'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import TableSkeleton from '@/components/skeleton/table-skeleton'
 
 export default function layout({ children }: { children:ReactNode }) {
+  const router = useRouter();
+  useEffect(() => {
+    const accessToken = getAccessToken();
+
+    if (!accessToken) {
+      router.replace('/login');
+    }
+  }, [router]);
+
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    return <div className='h-screen flex justify-center items-center'>
+      <TableSkeleton />
+    </div>; 
+  }
+
+
   return (
     <div className=''>
         <SidebarProvider>
