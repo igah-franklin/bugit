@@ -23,7 +23,7 @@ export default function TransactionsPage() {
   return (
     <>
     <div className="">
-          <div className="flex items-center justify-end gap-3 mx-auto w-full max-w-5xl mb-3" >
+          <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mx-auto w-full max-w-5xl mb-3 px-1 md:px-0" >
               <div className="border-2 border-dotted dark:border-white/30 p-1 rounded-md ">
                 <Button className="py-5 bg-emerald-500/20 dark:text-white hover:bg-transparent"
                 onClick={() => handleOpenModal('income')}
