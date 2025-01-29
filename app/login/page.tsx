@@ -17,9 +17,9 @@ export default function LoginPage() {
       id: 1,
       content: (
         <h2 className="text-2xl font-semibold text-white">
-          Total Care.
+          Faster with.
           <br />
-          Total Different.
+          Bugit.
         </h2>
       ),
       color: "bg-muted/50",
