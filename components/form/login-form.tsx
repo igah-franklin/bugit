@@ -12,6 +12,7 @@ import { setAccessToken, setRefreshToken } from "@/services/token.service"
 import { signInAction } from "@/actions/auth/sign-in-action"
 import { useRouter } from "next/navigation"
 import { googleSignInAction } from "@/actions/auth/google-auth-action"
+import { toast } from "sonner"
 
 
 
@@ -39,11 +40,11 @@ export default function LoginForm() {
         setRefreshToken(responseData.refreshToken);
         router.push('/')
       } else {
-        setError("Invalid credentials, please try again.");
+        setError(responseData.message);
+        toast.error(responseData.message);
       }
     } catch (error) {
-      console.log(error)
-      //setError(error?.message || "An error occurred. Please try again later.");
+      setError("An error occurred. Please try again later.");
     } finally {
       setIsLoading(false);
     }
@@ -123,3 +124,7 @@ export default function LoginForm() {
     </Form>
   )
 }
+function isActionError(result: any) {
+  throw new Error("Function not implemented.")
+}
+
