@@ -39,10 +39,6 @@ export default function Dashboard() {
           <TransactionCard title="Income Total" amount={financialSummaryData[0]?.totalIncome} type="income" />
           <TransactionCard title="Balance" amount={financialSummaryData[0]?.balance} type="balance" />
         </div>
-        {/* <div className="mx-auto h-[100vh] w-full max-w-3xl rounded-xl bg-muted/50" >
-        </div> */}
-        {/* <div className="w-full max-w-5xl mx-auto rounded-xl bg-mute grid grid-cols-1 md:grid-cols-3 gap-4 p-2" >
-        </div> */}
         <div className="w-full max-w-5xl mx-auto bg-muted/50 p-2 my-5 rounded-md hidden lg:block">
           <TransactionHistoryGrid  transactionData={transactionData}/>
         </div>

@@ -9,6 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { useLogout } from "@/hooks/useLogout"
 
 export function NavSecondary({
   items,
@@ -21,18 +22,27 @@ export function NavSecondary({
     badge?: React.ReactNode
   }[]
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+
+  const { handleLogout } = useLogout();
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild>
+              {
+                item.title==='Logout' 
+                ? (<SidebarMenuButton onClick={handleLogout}>
+                    <item.icon />
+                    <span>{item.title}</span>
+                </SidebarMenuButton>)
+                : <SidebarMenuButton asChild>
                 <a href={item.url}>
                   <item.icon />
-                  {/* <span>{item.title}</span> */}
+                  <span>{item.title}</span>
                 </a>
               </SidebarMenuButton>
+              }
               {item.badge && <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>}
             </SidebarMenuItem>
           ))}

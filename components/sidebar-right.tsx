@@ -13,21 +13,7 @@ const data = {
     name: "Igah",
     email: "igahfranklin.com",
     avatar: "/avatars/shadcn.jpg",
-  },
-  calendars: [
-    {
-      name: "My Calendars",
-      items: ["Personal", "Work", "Family"],
-    },
-    {
-      name: "Favorites",
-      items: ["Holidays", "Birthdays"],
-    },
-    {
-      name: "Other",
-      items: ["Travel", "Reminders", "Deadlines"],
-    },
-  ],
+  }
 }
 
 export function SidebarRight({
@@ -45,16 +31,6 @@ export function SidebarRight({
       <SidebarContent>
         <FinancialHealthCalculator/>
       </SidebarContent>
-      {/* <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton>
-              <Plus />
-              <span>New Calendar</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter> */}
     </Sidebar>
   )
 }
